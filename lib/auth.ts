@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const SESSION_COOKIE = 'admin_session';
+
 export function verifyAdminAuth(request: NextRequest): boolean {
-  const adminPassword = request.headers.get('x-admin-password');
-  const validPassword = process.env.ADMIN_PASSWORD;
-  
-  return adminPassword === validPassword;
+  return request.cookies.has(SESSION_COOKIE);
 }
 
 export function unauthorizedResponse() {
