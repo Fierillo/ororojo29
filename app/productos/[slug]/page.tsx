@@ -81,14 +81,26 @@ export default async function ProductoDetallePage({ params }: Props) {
               <p className="text-cobre text-4xl font-bold mb-8">
                 ${product.price.toLocaleString("es-AR")}
               </p>
-              <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-                {product.description}
-              </p>
+              <div className="mb-8">
+                <h2 className="font-display text-2xl text-cobre-light mb-4 italic">La Esencia</h2>
+                <p className="text-gray-300 text-lg leading-relaxed italic">
+                  {product.description}
+                </p>
+              </div>
+
+              <div className="h-px w-full bg-linear-to-r from-cobre/50 via-cobre to-cobre/50 mb-8 opacity-30" />
 
               {product.specs && (
-                <div className="mb-10 p-6 bg-dark-card border border-cobre/20 rounded-xl">
-                  <h3 className="font-display text-xl text-cobre-light mb-4">Especificaciones</h3>
-                  <p className="text-gray-300 whitespace-pre-line">{product.specs}</p>
+                <div className="mb-10 p-6 bg-dark-card/50 border border-cobre/10 rounded-xl backdrop-blur-sm">
+                  <h3 className="font-display text-xl text-cobre-light mb-4 uppercase tracking-widest text-sm">Propiedades de la Materia</h3>
+                  <div className="text-gray-400 space-y-2">
+                    {product.specs.split('\n').map((line: string, i: number) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <span className="text-cobre mt-1.5 w-1.5 h-1.5 rounded-full bg-cobre flex-shrink-0" />
+                        <span>{line}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
