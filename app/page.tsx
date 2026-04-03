@@ -111,9 +111,8 @@ export default async function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product: any) => {
-              const imageObj = product.images?.[0];
-              const imageUrl = typeof imageObj === 'object' && imageObj?.url ? imageObj.url : null;
-              const categoryName = typeof product.category === 'object' && product.category?.name ? product.category.name : '';
+              const imageUrl = product.image_id ? `/api/images?id=${product.image_id}` : null;
+              const categoryName = product.category_name || '';
 
               return (
                 <ProductCard
