@@ -7,6 +7,8 @@ interface Category {
   id: number;
   name: string;
   slug: string;
+  intro_text?: string;
+  image_id?: number | null;
 }
 
 interface Product {
@@ -15,6 +17,7 @@ interface Product {
   slug: string;
   price: number;
   description: string;
+  specs?: string;
   category_id: number;
   category_name?: string;
   featured: boolean;
@@ -37,6 +40,7 @@ export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [view, setView] = useState<View>('products');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -48,6 +52,7 @@ export default function AdminPage() {
     schedule: '',
   });
   const [configLoading, setConfigLoading] = useState(false);
+  const [categoryPreviewImage, setCategoryPreviewImage] = useState<string | null>(null);
 
   useEffect(() => {
     verifySession();
@@ -159,6 +164,7 @@ export default function AdminPage() {
       name: formData.get('name'),
       price: Number(formData.get('price')),
       description: formData.get('description'),
+      specs: formData.get('specs') || '',
       category_id: Number(formData.get('category_id')),
       destacado: formData.get('destacado') === 'on',
       image_id: imageId,
@@ -205,6 +211,56 @@ export default function AdminPage() {
       body: JSON.stringify({ name: formData.get('name') }),
     });
     fetchCategories();
+  }
+
+  function startEditCategory(category: Category) {
+    setEditingCategory(category);
+    if (category.image_id) {
+      setCategoryPreviewImage(`/api/images/${category.image_id}`);
+    } else {
+      setCategoryPreviewImage(null);
+    }
+  }
+
+  async function handleUpdateCategory(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!editingCategory) return;
+    
+    const formData = new FormData(e.currentTarget);
+    const imageFile = formData.get('editImage') as File;
+    
+    let imageId = editingCategory.image_id || null;
+    
+    if (imageFile && imageFile.size > 0) {
+      const formDataImg = new FormData();
+      formDataImg.append('file', imageFile);
+      const res = await fetch('/api/images', { method: 'POST', body: formDataImg });
+      if (res.ok) {
+        const data = await res.json();
+        imageId = data.id;
+      }
+    }
+    
+    await fetch(`/api/categories?id=${editingCategory.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        name: formData.get('editName'),
+        intro_text: formData.get('editIntroText'),
+        image_id: imageId
+      }),
+    });
+    setEditingCategory(null);
+    setCategoryPreviewImage(null);
+    fetchCategories();
+  }
+  
+  function handleCategoryImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setCategoryPreviewImage(url);
+    }
   }
 
   async function handleSaveConfig(e: React.FormEvent<HTMLFormElement>) {
@@ -280,6 +336,7 @@ export default function AdminPage() {
                 <input name="name" defaultValue={editingProduct?.name} placeholder="Nombre" required className="p-2 rounded bg-gray-700" />
                 <input name="price" type="number" defaultValue={editingProduct?.price} placeholder="Precio" required className="p-2 rounded bg-gray-700" />
                 <textarea name="description" defaultValue={editingProduct?.description} placeholder="Descripción" required className="p-2 rounded bg-gray-700 col-span-2" rows={3} />
+                <textarea name="specs" defaultValue={editingProduct?.specs || ''} placeholder="Especificaciones técnicas (opcional)" className="p-2 rounded bg-gray-700 col-span-2" rows={2} />
                 <select name="category_id" defaultValue={editingProduct?.category_id || ''} required className="p-2 rounded bg-gray-700">
                   <option value="">Seleccionar categoría</option>
                   {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -359,12 +416,76 @@ export default function AdminPage() {
 
             <div className="space-y-2">
               {categories.map((c) => (
-                <div key={c.id} className="bg-gray-800 p-4 rounded flex justify-between items-center">
-                  <span>{c.name}</span>
-                  <button onClick={() => handleDeleteCategory(c.id)} className="text-red-500 hover:underline">Eliminar</button>
+                <div key={c.id} className="bg-gray-800 p-4 rounded">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-3">
+                      {c.image_id && (
+                        <img 
+                          src={getCropImageSrc(`/api/images/${c.image_id}`)}
+                          alt={c.name}
+                          className="w-10 h-10 object-cover rounded"
+                          onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
+                        />
+                      )}
+                      <span className="font-bold">{c.name}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={() => startEditCategory(c)} className="text-cobre hover:underline">Editar</button>
+                      <button onClick={() => handleDeleteCategory(c.id)} className="text-red-500 hover:underline">Eliminar</button>
+                    </div>
+                  </div>
+                  {c.intro_text && (
+                    <p className="text-gray-500 text-sm">{c.intro_text.slice(0, 80)}...</p>
+                  )}
                 </div>
               ))}
             </div>
+
+            {editingCategory && (
+              <form onSubmit={handleUpdateCategory} className="bg-gray-800 p-6 rounded-lg mt-8">
+                <h2 className="text-xl mb-4">Editar Categoría</h2>
+                <div className="space-y-4">
+                  <input 
+                    name="editName" 
+                    defaultValue={editingCategory.name} 
+                    placeholder="Nombre" 
+                    required 
+                    className="p-2 rounded bg-gray-700 w-full" 
+                  />
+                  <textarea 
+                    name="editIntroText" 
+                    defaultValue={editingCategory.intro_text || ''} 
+                    placeholder="Texto introductorio místico (opcional)" 
+                    className="p-2 rounded bg-gray-700 w-full" 
+                    rows={4}
+                  />
+                  <div>
+                    <label className="block mb-2">Imagen de categoría</label>
+                    <input 
+                      type="file" 
+                      name="editImage" 
+                      accept="image/*"
+                      onChange={handleCategoryImageChange}
+                      className="p-2 rounded bg-gray-700 w-full"
+                    />
+                    {(categoryPreviewImage || editingCategory.image_id) && (
+                      <div className="mt-2">
+                        <img 
+                          src={categoryPreviewImage || getCropImageSrc(`/api/images/${editingCategory.image_id}`)}
+                          alt="Preview"
+                          className="h-24 object-cover rounded"
+                          onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-4">
+                  <button type="submit" className="bg-cobre px-4 py-2 rounded">Guardar</button>
+                  <button type="button" onClick={() => { setEditingCategory(null); setCategoryPreviewImage(null); }} className="bg-gray-600 px-4 py-2 rounded">Cancelar</button>
+                </div>
+              </form>
+            )}
           </>
         )}
 
