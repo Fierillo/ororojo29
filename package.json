@@ -12,7 +12,8 @@
     "seed": "npx tsx src/seed.ts",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:hacker": "vitest run tests/hacker-*.test.ts"
   },
   "dependencies": {
     "@payloadcms/db-vercel-postgres": "^3.81.0",
@@ -41,9 +42,11 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/supertest": "^7.2.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "jsdom": "^29.0.1",
+    "supertest": "^7.2.2",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",
