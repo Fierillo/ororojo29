@@ -5,7 +5,6 @@ Tienda web para venta de utensilios y productos de cobre artesanales.
 ## Stack Tecnológico
 
 - **Framework**: Next.js 16 (App Router)
-- **CMS**: Payload CMS 3.0
 - **Base de Datos**: Neon PostgreSQL
 - **Estilos**: Tailwind CSS v4
 - **Iconos**: Lucide React
@@ -18,34 +17,29 @@ Tienda web para venta de utensilios y productos de cobre artesanales.
 ```
 ororojo29/
 ├── app/                         # Páginas (App Router)
-│   ├── (payload)/               # Payload CMS routes
-│   │   ├── admin/               # Admin panel
-│   │   └── api/                # API routes
+│   ├── admin/                   # Panel admin custom
 │   ├── page.tsx                 # Home
-│   ├── productos/              # Catálogo
-│   │   ├── page.tsx            # Listado
+│   ├── productos/               # Catálogo
+│   │   ├── page.tsx             # Listado
 │   │   └── [slug]/page.tsx     # Detalle
-│   ├── categorias/[categoria]/ # Productos por categoría
-│   ├── contacto/               # WhatsApp + Formulario
-│   └── api/contact/            # Contact form API
-├── src/                         # Payload CMS config
-│   ├── payload.config.ts       # Main config
-│   ├── collections/            # Collections
-│   │   ├── Users.ts           # User authentication
-│   │   ├── Media.ts           # Media uploads
-│   │   ├── Products.ts        # Products
-│   │   └── Categories.ts      # Categories
-│   ├── globals/               # Globals
-│   │   └── AdminData.ts       # Site config (WhatsApp, footer, etc)
-│   └── seed.ts                # Seed script
+│   ├── categorias/[categoria]/  # Productos por categoría
+│   ├── contacto/                # Contacto
+│   └── api/                     # API routes
+│       ├── products/           # CRUD productos
+│       ├── categories/         # CRUD categorías
+│       ├── images/             # Upload de imágenes
+│       ├── auth/               # Login simple
+│       └── contact/            # Contact form
 ├── components/                  # Componentes reutilizables
-│   ├── ui/                      # Button, Container, WhatsApp
-│   ├── layout/                  # Navbar, Footer, MainLayout
-│   ├── products/                # ProductCard
-│   └── forms/                   # ContactForm
+│   ├── ui/                      # WhatsApp, Button
+│   ├── layout/                  # Navbar, Footer
+│   └── products/                # ProductCard
 ├── lib/                         # Utilidades
-│   └── payload.ts              # Payload client
-└── public/                      # Assets estáticos
+│   ├── db.ts                   # Conexión PostgreSQL
+│   ├── data.ts                 # Funciones para obtener datos
+│   └── types.ts                # Tipos TypeScript
+└── public/images/               # Imágenes estáticas
+    └── placeholder.svg          # Fallback para productos sin imagen
 ```
 
 ## Quick Start
@@ -66,14 +60,14 @@ Accedé al panel de admin en: [http://localhost:3000/admin](http://localhost:300
 
 ### Credenciales
 
-- **Email:** `admin@ororojo29.com`
-- **Password:** Tu `PAYLOAD_SECRET` (del archivo `.env.local`)
+- **Password:** `ADMIN_PASSWORD` (del archivo `.env.local`)
 
-El usuario admin se crea automáticamente la primera vez que iniciás el servidor.
+El panel permite:
+- Agregar/editar/eliminar productos
+- Agregar/eliminar categorías
+- Subir imágenes directamente a la DB
 
 ## Variables de Entorno
-
-Creá un archivo `.env.local` basándote en `.env.local.example`:
 
 ```bash
 cp .env.local.example .env.local
@@ -84,9 +78,9 @@ Variables necesarias:
 | Variable | Descripción |
 |----------|-------------|
 | `POSTGRES_URL` | URL de conexión a Neon PostgreSQL |
-| `PAYLOAD_SECRET` | Secreto para Payload CMS (usado también como password del admin) |
-| `RESEND_API_KEY` | API Key de Resend (para emails del formulario) |
-| `NEXT_PUBLIC_SERVER_URL` | URL del sitio (ej: http://localhost:3000) |
+| `ADMIN_PASSWORD` | Password para acceder al admin |
+| `RESEND_API_KEY` | API Key de Resend (para emails) |
+| `NEXT_PUBLIC_SERVER_URL` | URL del sitio |
 
 ## Build
 
@@ -97,29 +91,74 @@ pnpm build
 ## Features
 
 ### Frontend
-
 - [x] Home con productos destacados
 - [x] Catálogo de productos
 - [x] Filtro por categorías
 - [x] Detalle de producto
-- [x] Formulario de contacto con validación
+- [x] Formulario de contacto
 - [x] Botón WhatsApp flotante
 - [x] Responsive design
 - [x] Dark theme con acentos en cobre
+- [x] Placeholder para productos sin imagen
 
-### Backend (Payload CMS)
+### Backend (API Custom)
+- [x] Panel admin simple (sin Payload CMS)
+- [x] CRUD Productos (sin imágenes complicadas)
+- [x] CRUD Categorías
+- [x] Upload de imágenes a PostgreSQL (BYTEA)
+- [x] Autenticación simple por password
 
-- [x] Panel de administración
-- [x] Colección Productos (CRUD)
-- [x] Colección Categorías
-- [x] Colección Media (uploads)
-- [x] Global AdminData (configuración del sitio)
-- [x] Sistema de autenticación simplificado
-- [x] Registro de usuarios deshabilitado (solo 1 admin)
+### API Routes
 
-### API
+| Endpoint | Método | Descripción |
+|----------|--------|-------------|
+| `/api/products` | GET | Listar productos |
+| `/api/products` | POST | Crear producto |
+| `/api/products?id={id}` | PUT | Editar producto |
+| `/api/products?id={id}` | DELETE | Eliminar producto |
+| `/api/categories` | GET | Listar categorías |
+| `/api/categories` | POST | Crear categoría |
+| `/api/categories?id={id}` | DELETE | Eliminar categoría |
+| `/api/images` | POST | Subir imagen (max 2MB) |
+| `/api/images?id={id}` | GET | Ver imagen |
+| `/api/auth` | POST | Validar password |
 
-- [x] `/api/contact` - Formulario de contacto (envía email via Resend)
+## Base de Datos
+
+### Tablas
+
+| Tabla | Descripción |
+|-------|-------------|
+| `products` | Catálogo de productos |
+| `categories` | Categorías de productos |
+| `images` | Imágenes almacenadas como BYTEA |
+
+### Schema Products
+- `id` - ID único
+- `name` - Nombre
+- `slug` - URL amigable (auto-generado)
+- `price` - Precio
+- `description` - Descripción
+- `category_id` - FK a categories
+- `stock` - Stock (nullable)
+- `featured` - Boolean (destacado)
+- `image_id` - FK a images (nullable)
+- `created_at` - Fecha de creación
+- `updated_at` - Fecha de actualización
+
+### Schema Categories
+- `id` - ID único
+- `name` - Nombre
+- `slug` - URL amigable (auto-generado)
+- `description` - Descripción
+- `created_at` - Fecha de creación
+- `updated_at` - Fecha de actualización
+
+### Schema Images
+- `id` - ID único
+- `filename` - Nombre del archivo
+- `mime_type` - Tipo MIME
+- `data` - Binary de la imagen
 
 ## Deployment a Vercel
 
@@ -133,37 +172,13 @@ pnpm build
 2. **Deploy en Vercel:**
    - Ir a [vercel.com](https://vercel.com)
    - Importar el repositorio
-   - Agregar las variables de entorno en Settings:
+   - Agregar las variables de entorno:
      - `POSTGRES_URL`
-     - `PAYLOAD_SECRET`
+     - `ADMIN_PASSWORD`
      - `RESEND_API_KEY`
-     - `NEXT_PUBLIC_SERVER_URL`
    - Deploy automático
 
-3. **Primera vez:**
-   - El `onInit` de Payload creará el usuario admin automáticamente
-   - Accedé a `/admin` con email: `admin@ororojo29.com` y password: tu `PAYLOAD_SECRET`
-
-## Colecciones Payload CMS
-
-### Products
-- `name` - Nombre del producto
-- `slug` - URL amigable
-- `description` - Descripción (rich text)
-- `price` - Precio
-- `images` - Imágenes (media)
-- `category` - Relación a Categories
-- `featured` - Producto destacado
-
-### Categories
-- `name` - Nombre
-- `slug` - URL amigable
-- `description` - Descripción
-
-### AdminData (Global)
-- `whatsapp` - Número de WhatsApp
-- `footer` - Texto del footer
-- `contactEmail` - Email de contacto
+3. **La DB ya tiene datos** - Los productos y categorías se mantienen.
 
 ## Licencia
 
