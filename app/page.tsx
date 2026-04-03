@@ -1,15 +1,15 @@
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
-import ProductCard from "@/components/products/ProductCard";
+import FeaturedProducts from "@/components/ui/FeaturedProducts";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getProducts, getCategories, getAdminData } from "@/lib/data";
 import { Sparkles } from "lucide-react";
 
-export const revalidate = 60; // revalidate page every 60 seconds
+export const revalidate = 60;
 
 export default async function Home() {
   const categories = await getCategories();
-  const products = await getProducts({ featured: { equals: true } });
+  const products = await getProducts({ featured: true });
   const adminData: any = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
 
@@ -107,24 +107,9 @@ export default async function Home() {
           <h2 className="font-display text-4xl text-center mb-16">
             <span className="cobre-text-gradient">Productos Destacados</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product: any) => {
-              const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
-              const categoryName = product.category_name || '';
-
-              return (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  slug={product.slug}
-                  name={product.name}
-                  price={product.price}
-                  image={imageUrl}
-                  category={categoryName}
-                />
-              );
-            })}
-          </div>
+          
+          <FeaturedProducts categories={categories} products={products} />
+          
           <div className="text-center mt-16">
             <Link href="/productos" className="btn-primary">
               Ver Todos los Productos

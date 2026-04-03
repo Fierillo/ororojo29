@@ -1,8 +1,7 @@
 import MainLayout from "@/components/layout/MainLayout";
-import ProductCard from "@/components/products/ProductCard";
+import ProductGrid from "@/components/ui/ProductGrid";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getProducts, getCategories, getAdminData } from "@/lib/data";
-import Link from "next/link";
 
 export const revalidate = 60;
 
@@ -23,42 +22,7 @@ export default async function ProductosPage() {
             Explorá nuestra colección de productos de cobre artesanales
           </p>
 
-          <div className="flex gap-3 mb-12 flex-wrap">
-            <Link
-              href="/productos"
-              className="px-5 py-2.5 rounded-full bg-cobre text-white hover:bg-cobre-light transition-colors font-medium"
-            >
-              Todos
-            </Link>
-            {categories.map((category: any) => (
-              <Link
-                key={category.id}
-                href={`/categorias/${category.slug}`}
-                className="px-5 py-2.5 rounded-full bg-dark-card text-gray-300 border border-dark-border hover:border-cobre hover:text-cobre-light transition-all font-medium"
-              >
-                {category.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product: any) => {
-              const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
-              const categoryName = product.category_name || '';
-
-              return (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  slug={product.slug}
-                  name={product.name}
-                  price={product.price}
-                  image={imageUrl}
-                  category={categoryName}
-                />
-              );
-            })}
-          </div>
+          <ProductGrid categories={categories} products={products} />
         </div>
       </div>
       <WhatsAppButton phone={whatsappNumber} />
