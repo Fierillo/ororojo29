@@ -31,7 +31,7 @@ export const products = {
     return result.rows;
   },
 
-  create: async (data: { name: string; price: number; description: string; category_id: number; destacado?: boolean; image_id?: number }) => {
+  create: async (data: { name: string; price: number; description: string; category_id: number | null; destacado?: boolean; image_id?: number | null }) => {
     const slug = data.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const result = await pool.query(
       `INSERT INTO products (name, slug, price, description, category_id, featured, image_id, created_at, updated_at) 
@@ -41,7 +41,7 @@ export const products = {
     return result.rows[0];
   },
 
-  update: async (id: number, data: { name: string; price: number; description: string; category_id: number; destacado?: boolean; image_id?: number }) => {
+  update: async (id: number, data: { name: string; price: number; description: string; category_id: number | null; destacado?: boolean; image_id?: number | null }) => {
     const slug = data.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const result = await pool.query(
       `UPDATE products SET name = $1, slug = $2, price = $3, description = $4, category_id = $5, featured = $6, image_id = $7, updated_at = NOW()
