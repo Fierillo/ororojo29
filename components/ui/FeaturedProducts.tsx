@@ -50,11 +50,11 @@ export default function FeaturedProducts({ categories, products }: FeaturedProdu
       <div className="flex flex-wrap gap-3 justify-center mb-8">
         <button
           onClick={clearFilters}
-          className={`px-6 py-2 rounded-full transition-all duration-300 ${
+          className={`px-6 py-2 rounded-full transition-all duration-500 hover:scale-105 ${
             activeCategories.length === 0
-              ? "bg-cobre text-white"
-              : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-          }`}
+              ? "bg-cobre text-white energia-glow border-cobre-light"
+              : "bg-gray-800 text-gray-400 hover:bg-gray-700 border-transparent"
+          } border`}
         >
           Todos
         </button>
@@ -63,11 +63,11 @@ export default function FeaturedProducts({ categories, products }: FeaturedProdu
           <button
             key={category.id}
             onClick={() => toggleCategory(category.id)}
-            className={`px-6 py-2 rounded-full transition-all duration-300 ${
+            className={`px-6 py-2 rounded-full transition-all duration-500 hover:scale-105 ${
               activeCategories.includes(category.id)
-                ? "bg-cobre text-white"
-                : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
-            }`}
+                ? "bg-cobre text-white energia-glow border-cobre-light"
+                : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white border-transparent"
+            } border`}
           >
             {category.name}
           </button>
@@ -75,19 +75,21 @@ export default function FeaturedProducts({ categories, products }: FeaturedProdu
       </div>
 
       {activeCategories.length > 0 && (
-        <div className="mb-8 text-center">
-          <span className="text-gray-400 text-sm">
-            Filtrando por:{" "}
-            {categories
-              .filter((c: any) => activeCategories.includes(c.id))
-              .map((c: any) => c.name)
-              .join(" + ")}
+        <div className="mb-8 text-center animate-in fade-in duration-700">
+          <span className="text-cobre-light/60 text-sm tracking-widest uppercase">
+            Sintonizando:{" "}
+            <span className="text-cobre-light">
+              {categories
+                .filter((c: any) => activeCategories.includes(c.id))
+                .map((c: any) => c.name)
+                .join(" + ")}
+            </span>
           </span>
           <button
             onClick={clearFilters}
-            className="ml-4 text-cobre hover:underline text-sm"
+            className="ml-4 text-gray-500 hover:text-cobre transition-colors text-sm uppercase tracking-tighter"
           >
-            Limpiar
+            [ Limpiar ]
           </button>
         </div>
       )}

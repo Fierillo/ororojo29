@@ -50,11 +50,11 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
       <div className="flex flex-wrap gap-3 justify-center mb-8">
         <button
           onClick={clearFilters}
-          className={`px-6 py-2 rounded-full transition-all duration-300 ${
+          className={`px-6 py-2 rounded-full transition-all duration-500 hover:scale-105 ${
             activeCategories.length === 0
-              ? "bg-cobre text-white"
-              : "bg-dark-card text-gray-400 hover:bg-gray-700 border border-dark-border"
-          }`}
+              ? "bg-cobre text-white energia-glow border-cobre-light"
+              : "bg-dark-card text-gray-400 hover:bg-gray-700 border-dark-border"
+          } border`}
         >
           Todos
         </button>
@@ -63,11 +63,11 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
           <button
             key={category.id}
             onClick={() => toggleCategory(category.id)}
-            className={`px-6 py-2 rounded-full transition-all duration-300 ${
+            className={`px-6 py-2 rounded-full transition-all duration-500 hover:scale-105 ${
               activeCategories.includes(category.id)
-                ? "bg-cobre text-white"
-                : "bg-dark-card text-gray-300 border border-dark-border hover:border-cobre hover:text-cobre-light"
-            }`}
+                ? "bg-cobre text-white energia-glow border-cobre-light"
+                : "bg-dark-card text-gray-300 border-dark-border hover:border-cobre hover:text-cobre-light"
+            } border`}
           >
             {category.name}
           </button>
@@ -75,19 +75,21 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
       </div>
 
       {activeCategories.length > 0 && (
-        <div className="mb-8 text-center">
-          <span className="text-gray-400 text-sm">
-            Filtrando por:{" "}
-            {categories
-              .filter((c: any) => activeCategories.includes(c.id))
-              .map((c: any) => c.name)
-              .join(" + ")}
+        <div className="mb-8 text-center animate-in fade-in duration-700">
+          <span className="text-cobre-light/60 text-sm tracking-widest uppercase">
+            Sintonizando:{" "}
+            <span className="text-cobre-light">
+              {categories
+                .filter((c: any) => activeCategories.includes(c.id))
+                .map((c: any) => c.name)
+                .join(" + ")}
+            </span>
           </span>
           <button
             onClick={clearFilters}
-            className="ml-4 text-cobre hover:underline text-sm"
+            className="ml-4 text-gray-500 hover:text-cobre transition-colors text-sm uppercase tracking-tighter"
           >
-            Limpiar
+            [ Limpiar ]
           </button>
         </div>
       )}
