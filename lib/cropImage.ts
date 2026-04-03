@@ -1,6 +1,6 @@
 export const PLACEHOLDER = "/images/placeholder.svg";
 
-export function getImageSrc(src: string | null | undefined): string {
+export function getCropImageSrc(src: string | null | undefined): string {
   return src || PLACEHOLDER;
 }
 
@@ -13,9 +13,10 @@ interface ImageProps {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  withFallback?: boolean;
 }
 
-export function getImageProps({
+export function getCropImageProps({
   src,
   alt,
   fill = false,
@@ -24,25 +25,30 @@ export function getImageProps({
   className = "",
   sizes,
   priority = false,
+  withFallback = true,
 }: ImageProps) {
   const imageSrc = src || PLACEHOLDER;
   
-  return {
+  const props: any = {
     src: imageSrc,
     alt,
     fill,
-    width,
-    height,
+    width: fill ? undefined : width,
+    height: fill ? undefined : height,
     className,
     sizes,
     priority,
-    style: { width: 'auto', height: 'auto' },
-    onError: (e: React.SyntheticEvent<HTMLImageElement>) => {
-      e.currentTarget.src = PLACEHOLDER;
-    },
   };
+  
+  if (withFallback) {
+    props.onError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+      e.currentTarget.src = PLACEHOLDER;
+    };
+  }
+  
+  return props;
 }
 
-export function getBgImageStyle(src: string | null | undefined): string {
+export function getCropBgImageStyle(src: string | null | undefined): string {
   return src ? `url(${src})` : `url(${PLACEHOLDER})`;
 }

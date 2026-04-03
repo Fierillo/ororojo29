@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getImageProps } from "@/lib/cropImage";
+import { getCropImageProps } from "@/lib/cropImage";
 
 interface ProductCardProps {
   id: string;
@@ -20,7 +20,7 @@ export default function ProductCard({
   image,
   category,
 }: ProductCardProps) {
-  const imageProps = getImageProps({
+  const imageProps = getCropImageProps({
     src: image,
     alt: name,
     fill: true,
@@ -33,7 +33,7 @@ export default function ProductCard({
       <article className="dark-card card-hover overflow-hidden transition-all duration-300">
         <div className="relative w-full aspect-square bg-dark-card overflow-hidden">
           <Image {...imageProps} />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           <span className="absolute top-4 left-4 bg-cobre/90 text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm z-10">
             {category}
           </span>

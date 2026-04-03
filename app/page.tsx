@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <MainLayout>
       <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-cobre/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-br from-cobre/20 via-transparent to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
@@ -40,11 +40,11 @@ export default async function Home() {
             </div>
             <div className="relative">
               <div className="relative">
-                <div className="absolute -inset-2 bg-gradient-to-br from-cobre/40 via-cobre-dark/20 to-cobre-light/40 rounded-3xl blur-sm" />
-                <div className="absolute -inset-1 bg-gradient-to-br from-cobre-light/30 via-cobre/20 to-cobre-dark/30 rounded-[22px]" />
+                <div className="absolute -inset-2 bg-linear-to-br from-cobre/40 via-cobre-dark/20 to-cobre-light/40 rounded-3xl blur-sm" />
+                <div className="absolute -inset-1 bg-linear-to-br from-cobre-light/30 via-cobre/20 to-cobre-dark/30 rounded-[22px]" />
                 <div className="relative bg-dark-card border border-cobre/30 rounded-3xl p-1">
                   <div className="border border-cobre/50 rounded-[20px] p-1">
-                    <div className="bg-gradient-to-br from-dark-card via-black to-dark-card rounded-[18px] py-16 px-12 flex flex-col items-center justify-center">
+                    <div className="bg-linear-to-br from-dark-card via-black to-dark-card rounded-[18px] py-16 px-12 flex flex-col items-center justify-center">
                       <div className="w-52 h-52 flex items-center justify-center mb-6">
                         <Image
                           src="/logo.png"
@@ -57,7 +57,7 @@ export default async function Home() {
                         />
                       </div>
                       <div className="relative w-32">
-                        <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-cobre to-transparent top-1/2" />
+                        <div className="absolute inset-0 h-px bg-linear-to-r from-transparent via-cobre to-transparent top-1/2" />
                         <div className="absolute left-0 top-1/2 w-2 h-2 -translate-y-1/2 bg-cobre rounded-full" />
                         <div className="absolute right-0 top-1/2 w-2 h-2 -translate-y-1/2 bg-cobre rounded-full" />
                       </div>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="cauldron" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4a574"/>
+      <stop offset="30%" style="stop-color:#b87333"/>
+      <stop offset="70%" style="stop-color:#8b5a2b"/>
+      <stop offset="100%" style="stop-color:#5c3d1e"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe4b5;stop-opacity:0.8"/>
+      <stop offset="50%" style="stop-color:#daa520;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#b87333;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect fill="url(#bg)" width="600" height="600"/>
+  
+  <!-- Table surface -->
+  <rect x="0" y="400" width="600" height="200" fill="#0f0f0f"/>
+  <rect x="0" y="400" width="600" height="3" fill="#333"/>
+  
+  <!-- Cauldron shadow -->
+  <ellipse cx="300" cy="480" rx="140" ry="30" fill="#000" opacity="0.4"/>
+  
+  <!-- Cauldron body -->
+  <ellipse cx="300" cy="380" rx="150" ry="100" fill="url(#cauldron)" filter="url(#shadow)"/>
+  
+  <!-- Cauldron top rim -->
+  <ellipse cx="300" cy="280" rx="160" ry="45" fill="none" stroke="#daa520" stroke-width="12"/>
+  <ellipse cx="300" cy="280" rx="140" ry="35" fill="#5c3d1e"/>
+  
+  <!-- Cauldron inside -->
+  <ellipse cx="300" cy="280" rx="120" ry="30" fill="#3d2512"/>
+  
+  <!-- Left handle -->
+  <path d="M140 260 Q120 200 140 150 Q150 130 170 140 Q185 150 180 180 Q175 220 170 260" fill="#b87333" stroke="#8b5a2b" stroke-width="3"/>
+  
+  <!-- Right handle -->
+  <path d="M460 260 Q480 200 460 150 Q450 130 430 140 Q415 150 420 180 Q425 220 430 260" fill="#b87333" stroke="#8b5a2b" stroke-width="3"/>
+  
+  <!-- Shine on body -->
+  <ellipse cx="260" cy="360" rx="50" ry="30" fill="url(#shine)"/>
+  
+  <!-- Product tag -->
+  <rect x="200" y="520" width="200" height="50" rx="8" fill="#b87333"/>
+  <text x="300" y="555" text-anchor="middle" fill="#fff" font-family="Arial" font-size="24" font-weight="bold">CAZUELA</text>
+</svg>

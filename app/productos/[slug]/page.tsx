@@ -2,6 +2,7 @@ import Image from "next/image";
 import MainLayout from "@/components/layout/MainLayout";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getProductBySlug, getProducts, getAdminData } from "@/lib/data";
+import { getCropImageProps } from "@/lib/cropImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -35,8 +36,8 @@ export default async function ProductoDetallePage({ params }: Props) {
   );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-  const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
   const categoryName = product.category_name || '';
+  const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
 
   return (
     <MainLayout>
@@ -54,14 +55,14 @@ export default async function ProductoDetallePage({ params }: Props) {
             <div className="relative">
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden energia-glow bg-dark-card">
                 {imageUrl ? (
-                  <Image
-                    src={imageUrl}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                    style={{ width: 'auto', height: 'auto' }}
-                  />
+                  <Image {...getCropImageProps({
+                    src: imageUrl,
+                    alt: product.name,
+                    fill: true,
+                    sizes: "(max-width: 768px) 100vw, 50vw",
+                    className: "object-cover",
+                    withFallback: false,
+                  })} />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-gray-500">
                     Sin imagen

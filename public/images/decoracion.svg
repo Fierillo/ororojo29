@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d3d3d"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="tray" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c17a"/>
+      <stop offset="25%" style="stop-color:#d4a574"/>
+      <stop offset="50%" style="stop-color:#b87333"/>
+      <stop offset="75%" style="stop-color:#a0522d"/>
+      <stop offset="100%" style="stop-color:#8b4513"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c9a227"/>
+      <stop offset="50%" style="stop-color:#daa520"/>
+      <stop offset="100%" style="stop-color:#c9a227"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5a2b"/>
+      <stop offset="100%" style="stop-color:#5c3d1e"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dark background -->
+  <rect fill="url(#bg)" width="600" height="600"/>
+  
+  <!-- Wooden table -->
+  <rect x="0" y="420" width="600" height="180" fill="#1a1208"/>
+  <line x1="0" y1="430" x2="600" y2="430" stroke="#2a1a0a" stroke-width="2"/>
+  
+  <!-- Tray shadow -->
+  <ellipse cx="300" cy="440" rx="200" ry="20" fill="#000" opacity="0.5"/>
+  
+  <!-- Decorative tray -->
+  <ellipse cx="300" cy="350" rx="200" ry="180" fill="url(#tray)" filter="url(#glow)"/>
+  
+  <!-- Inner rim -->
+  <ellipse cx="300" cy="350" rx="170" ry="155" fill="none" stroke="url(#rim)" stroke-width="15"/>
+  
+  <!-- Center decoration -->
+  <ellipse cx="300" cy="350" rx="140" ry="125" fill="url(#inner)"/>
+  
+  <!-- Hammered texture circles -->
+  <circle cx="250" cy="300" r="15" fill="#4a2c10" opacity="0.3"/>
+  <circle cx="350" cy="300" r="15" fill="#4a2c10" opacity="0.3"/>
+  <circle cx="250" cy="400" r="15" fill="#4a2c10" opacity="0.3"/>
+  <circle cx="350" cy="400" r="15" fill="#4a2c10" opacity="0.3"/>
+  <circle cx="300" cy="350" r="20" fill="#4a2c10" opacity="0.3"/>
+  
+  <!-- Reflections -->
+  <ellipse cx="270" cy="320" rx="40" ry="25" fill="#fff" opacity="0.15"/>
+  
+  <!-- Handles on sides -->
+  <rect x="80" y="340" width="40" height="20" rx="5" fill="#b87333"/>
+  <rect x="480" y="340" width="40" height="20" rx="5" fill="#b87333"/>
+  
+  <!-- Product label -->
+  <rect x="220" y="500" width="160" height="40" rx="5" fill="#b87333"/>
+  <text x="300" y="527" text-anchor="middle" fill="#fff" font-family="Georgia" font-size="20" font-weight="bold">DECORACIÓN</text>
+</svg>

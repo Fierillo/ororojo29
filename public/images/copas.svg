@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="cup1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c9a227"/>
+      <stop offset="30%" style="stop-color:#d4a574"/>
+      <stop offset="70%" style="stop-color:#b87333"/>
+      <stop offset="100%" style="stop-color:#8b5a2b"/>
+    </linearGradient>
+    <linearGradient id="cup2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c9a227"/>
+      <stop offset="30%" style="stop-color:#d4a574"/>
+      <stop offset="70%" style="stop-color:#b87333"/>
+      <stop offset="100%" style="stop-color:#8b5a2b"/>
+    </linearGradient>
+    <linearGradient id="wine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#722f37"/>
+      <stop offset="100%" style="stop-color:#4a1c23"/>
+    </linearGradient>
+    <linearGradient id="stem" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5a2b"/>
+      <stop offset="50%" style="stop-color:#b87333"/>
+      <stop offset="100%" style="stop-color:#8b5a2b"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect fill="url(#bg)" width="600" height="600"/>
+  
+  <!-- Table -->
+  <rect x="0" y="450" width="600" height="150" fill="#0f0f0f"/>
+  <line x1="0" y1="460" x2="600" y2="460" stroke="#2a2a2a" stroke-width="1"/>
+  
+  <!-- Cup 1 shadow -->
+  <ellipse cx="200" cy="420" rx="35" ry="8" fill="#000" opacity="0.4"/>
+  
+  <!-- Cup 1 stem -->
+  <rect x="190" y="350" width="20" height="70" fill="url(#stem)"/>
+  <ellipse cx="200" cy="420" rx="35" ry="10" fill="url(#stem)"/>
+  
+  <!-- Cup 1 bowl -->
+  <path d="M150 180 Q140 260 180 340 Q200 360 220 340 Q260 260 250 180 Q200 160 150 180" fill="url(#cup1)"/>
+  <path d="M160 190 Q155 260 185 330 Q200 345 215 330 Q245 260 240 190 Q200 175 160 190" fill="url(#wine)"/>
+  
+  <!-- Cup 1 shine -->
+  <path d="M165 200 Q160 250 180 310" stroke="#fff" stroke-width="3" fill="none" opacity="0.3" stroke-linecap="round"/>
+  
+  <!-- Cup 2 shadow -->
+  <ellipse cx="300" cy="420" rx="35" ry="8" fill="#000" opacity="0.4"/>
+  
+  <!-- Cup 2 stem -->
+  <rect x="290" y="350" width="20" height="70" fill="url(#stem)"/>
+  <ellipse cx="300" cy="420" rx="35" ry="10" fill="url(#stem)"/>
+  
+  <!-- Cup 2 bowl -->
+  <path d="M250 180 Q240 260 280 340 Q300 360 320 340 Q360 260 350 180 Q300 160 250 180" fill="url(#cup2)"/>
+  <path d="M260 190 Q255 260 285 330 Q300 345 315 330 Q345 260 340 190 Q300 175 260 190" fill="url(#wine)"/>
+  
+  <!-- Cup 2 shine -->
+  <path d="M265 200 Q260 250 280 310" stroke="#fff" stroke-width="3" fill="none" opacity="0.3" stroke-linecap="round"/>
+  
+  <!-- Cup 3 shadow -->
+  <ellipse cx="400" cy="420" rx="35" ry="8" fill="#000" opacity="0.4"/>
+  
+  <!-- Cup 3 stem -->
+  <rect x="390" y="350" width="20" height="70" fill="url(#stem)"/>
+  <ellipse cx="400" cy="420" rx="35" ry="10" fill="url(#stem)"/>
+  
+  <!-- Cup 3 bowl -->
+  <path d="M350 180 Q340 260 380 340 Q400 360 420 340 Q460 260 450 180 Q400 160 350 180" fill="url(#cup1)"/>
+  <path d="M360 190 Q355 260 385 330 Q400 345 415 330 Q445 260 440 190 Q400 175 360 190" fill="url(#wine)"/>
+  
+  <!-- Cup 3 shine -->
+  <path d="M365 200 Q360 250 380 310" stroke="#fff" stroke-width="3" fill="none" opacity="0.3" stroke-linecap="round"/>
+  
+  <!-- Product label -->
+  <rect x="220" y="480" width="160" height="40" rx="5" fill="#b87333"/>
+  <text x="300" y="507" text-anchor="middle" fill="#fff" font-family="Georgia" font-size="18" font-weight="bold">COPAS</text>
+</svg>

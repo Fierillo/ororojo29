@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { PLACEHOLDER, getCropImageSrc } from '@/lib/cropImage';
 
 interface Category {
   id: number;
@@ -48,9 +49,37 @@ export default function AdminPage() {
   });
   const [configLoading, setConfigLoading] = useState(false);
 
-  const headers = {
-    'X-Admin-Password': password,
-  };
+  useEffect(() => {
+    verifySession();
+  }, []);
+
+  async function verifySession() {
+    try {
+      const res = await fetch('/api/auth', { method: 'GET' });
+      if (res.ok) {
+        setAuthenticated(true);
+      }
+    } catch {}
+  }
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      body: JSON.stringify({ password }),
+    });
+    if (res.ok) {
+      setAuthenticated(true);
+      setPassword('');
+    } else {
+      alert('Password incorrecto');
+    }
+  }
+
+  async function handleLogout() {
+    await fetch('/api/auth', { method: 'DELETE' });
+    setAuthenticated(false);
+  }
 
   useEffect(() => {
     if (authenticated) {
@@ -73,33 +102,20 @@ export default function AdminPage() {
   }
 
   async function fetchSiteConfig() {
-    const res = await fetch('/api/site-config', { headers });
+    const res = await fetch('/api/site-config');
     const data = await res.json();
     setSiteConfig(data);
   }
 
-  async function handleLogin(e: React.FormEvent) {
-    e.preventDefault();
-    const res = await fetch('/api/auth', {
-      method: 'POST',
-      body: JSON.stringify({ password }),
-    });
-    if (res.ok) {
-      setAuthenticated(true);
-    } else {
-      alert('Password incorrecto');
-    }
-  }
-
   async function handleDeleteProduct(id: number) {
     if (!confirm('¿Eliminar producto?')) return;
-    await fetch(`/api/products?id=${id}`, { method: 'DELETE', headers });
+    await fetch(`/api/products?id=${id}`, { method: 'DELETE' });
     fetchProducts();
   }
 
   async function handleDeleteCategory(id: number) {
     if (!confirm('¿Eliminar categoría?')) return;
-    await fetch(`/api/categories?id=${id}`, { method: 'DELETE', headers });
+    await fetch(`/api/categories?id=${id}`, { method: 'DELETE' });
     fetchCategories();
   }
 
@@ -110,7 +126,6 @@ export default function AdminPage() {
     const res = await fetch('/api/images', {
       method: 'POST',
       body: formData,
-      headers,
     });
     
     if (res.ok) {
@@ -154,7 +169,7 @@ export default function AdminPage() {
 
     await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
@@ -186,7 +201,7 @@ export default function AdminPage() {
     const formData = new FormData(e.currentTarget);
     await fetch('/api/categories', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: formData.get('name') }),
     });
     fetchCategories();
@@ -198,7 +213,7 @@ export default function AdminPage() {
     
     await fetch('/api/site-config', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(siteConfig),
     });
     
@@ -231,7 +246,7 @@ export default function AdminPage() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Admin Panel</h1>
-          <button onClick={() => setAuthenticated(false)} className="text-gray-400 hover:text-white">
+          <button onClick={handleLogout} className="text-gray-400 hover:text-white">
             Cerrar sesión
           </button>
         </div>
@@ -284,7 +299,12 @@ export default function AdminPage() {
                   />
                   {previewImage && (
                     <div className="mt-2">
-                      <img src={previewImage} alt="Preview" className="h-32 object-cover rounded" />
+                      <img 
+                        src={getCropImageSrc(previewImage)} 
+                        alt="Preview" 
+                        className="h-32 object-cover rounded"
+                        onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
+                      />
                     </div>
                   )}
                 </div>
@@ -305,9 +325,12 @@ export default function AdminPage() {
               {products.map((p) => (
                 <div key={p.id} className="bg-gray-800 p-4 rounded flex justify-between items-center">
                   <div className="flex items-center gap-4">
-                    {p.image_id && (
-                      <img src={`/api/images/${p.image_id}`} alt={p.name} className="w-12 h-12 object-cover rounded" />
-                    )}
+                    <img 
+                      src={getCropImageSrc(p.image_id ? `/api/images/${p.image_id}` : null)} 
+                      alt={p.name} 
+                      className="w-12 h-12 object-cover rounded"
+                      onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
+                    />
                     <div>
                       <span className="font-bold">{p.name}</span>
                       <span className="text-gray-400 ml-2">${p.price}</span>
