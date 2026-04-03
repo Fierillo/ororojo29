@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Minimalist Cookware -->
+  <path d="M40 80 H160 V140 Q160 160 140 160 H60 Q40 160 40 140 Z" fill="none" stroke="#b87333" stroke-width="5"/>
+  <path d="M70 60 H130" stroke="#b87333" stroke-width="5" stroke-linecap="round"/>
+  <path d="M100 40 V60" stroke="#b87333" stroke-width="5" stroke-linecap="round"/>
+</svg>

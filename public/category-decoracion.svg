@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Minimalist Decoration (Diamond) -->
+  <path d="M100 20 L170 100 L100 180 L30 100 Z" fill="none" stroke="#b87333" stroke-width="5"/>
+  <path d="M100 50 L140 100 L100 150 L60 100 Z" fill="none" stroke="#b87333" stroke-width="3" opacity="0.6"/>
+  <path d="M100 80 L115 100 L100 120 L85 100 Z" fill="#b87333"/>
+</svg>
