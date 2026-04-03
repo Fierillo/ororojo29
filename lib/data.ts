@@ -5,7 +5,7 @@ export async function getProducts(query: Record<string, any> = {}) {
     if (query.featured) {
       return await products.getFeatured();
     }
-    if (query.category) {
+    if (query.category && typeof query.category === 'number') {
       return await products.getByCategory(query.category);
     }
     return await products.getAll();

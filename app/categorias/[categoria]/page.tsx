@@ -25,7 +25,7 @@ export default async function CategoriaPage({ params }: Props) {
     notFound();
   }
 
-  const categoryProducts = await getProducts({ category: { equals: category.id } });
+  const categoryProducts = await getProducts({ category: category.id });
   const adminData: any = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
 
