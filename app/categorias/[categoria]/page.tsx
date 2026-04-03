@@ -36,7 +36,14 @@ export default async function CategoriaPage({ params }: Props) {
           <h1 className="font-display text-5xl text-white mb-4">
             <span className="cobre-text-gradient">{category.name}</span>
           </h1>
-          <p className="text-gray-400 mb-12 text-lg">{category.description}</p>
+          
+          {category.intro_text && (
+            <div className="mb-12 p-8 bg-dark-card border border-cobre/20 rounded-2xl">
+              <p className="text-gray-300 text-lg leading-relaxed italic">
+                {category.intro_text}
+              </p>
+            </div>
+          )}
 
           {categoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

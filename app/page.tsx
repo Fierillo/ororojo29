@@ -21,12 +21,12 @@ export default async function Home() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <h1 className="font-display text-5xl md:text-7xl text-white mb-6 leading-tight">
-                Productos de Cobre{" "}
-                <span className="cobre-text-gradient">Artesanales</span>
+                Piezas de{" "}
+                <span className="cobre-text-gradient">Cobre Puro</span>
               </h1>
               <p className="text-xl text-gray-400 mb-10 leading-relaxed">
-                Calidad, elegancia y energía en cada pieza. Descubrí nuestra
-                colección única de cobre artesanal.
+                El cobre acompaña a la humanidad desde hace milenios. Sus propiedades 
+                naturales preservan, transforman y conectan.
               </p>
               <div className="flex gap-4 flex-wrap">
                 <Link href="/productos" className="btn-primary">
@@ -59,10 +59,10 @@ export default async function Home() {
                         <div className="absolute right-0 top-1/2 w-2 h-2 -translate-y-1/2 bg-cobre rounded-full" />
                       </div>
                       <p className="font-display text-3xl text-white text-center mt-8 tracking-[0.2em] uppercase">
-                        Artesanía en Cobre
+                        Cobre para la Vida
                       </p>
                       <p className="text-cobre-light/60 text-xs mt-3 tracking-[0.3em] uppercase">
-                        Energía & Calidad
+                        Tradición & Energía Natural
                       </p>
                     </div>
                   </div>
@@ -86,14 +86,22 @@ export default async function Home() {
                 className="group"
               >
                 <div className="dark-card card-hover p-10 text-center transition-all duration-300">
-                  <div className="w-20 h-20 cobre-gradient rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform energia-glow">
-                    <Sparkles size={32} className="text-white" />
-                  </div>
+                  {category.image_id ? (
+                    <img 
+                      src={`/api/images/${category.image_id}`}
+                      alt={category.name}
+                      className="w-20 h-20 rounded-full mx-auto mb-6 object-cover group-hover:scale-110 transition-transform"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 cobre-gradient rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform energia-glow">
+                      <Sparkles size={32} className="text-white" />
+                    </div>
+                  )}
                   <h3 className="font-display text-2xl text-white mb-3 group-hover:text-cobre-light transition-colors">
                     {category.name}
                   </h3>
                   <p className="text-gray-400">
-                    {category.description}
+                    {category.intro_text || category.description}
                   </p>
                 </div>
               </Link>
@@ -122,11 +130,10 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="cobre-gradient rounded-3xl p-16 text-center energia-glow">
             <h2 className="font-display text-4xl mb-6 text-white">
-              ¿Necesitás algo especial?
+              ¿Algo único en mente?
             </h2>
             <p className="text-white/90 mb-8 max-w-2xl mx-auto text-lg">
-              Hacemos piezas personalizadas a medida. Contanos tu idea y la
-              hacemos realidad.
+              Cada pieza puede ser transformada. Cuéntanos tu visión y la hacemos realidad.
             </p>
             <Link
               href="/contacto"

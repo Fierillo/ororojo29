@@ -85,6 +85,13 @@ export default async function ProductoDetallePage({ params }: Props) {
                 {product.description}
               </p>
 
+              {product.specs && (
+                <div className="mb-10 p-6 bg-dark-card border border-cobre/20 rounded-xl">
+                  <h3 className="font-display text-xl text-cobre-light mb-4">Especificaciones</h3>
+                  <p className="text-gray-300 whitespace-pre-line">{product.specs}</p>
+                </div>
+              )}
+
               <a
                 href={whatsappUrl}
                 target="_blank"
