@@ -1,65 +1,162 @@
 import Image from "next/image";
+import Link from "next/link";
+import MainLayout from "@/components/layout/MainLayout";
+import ProductCard from "@/components/products/ProductCard";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import { getProducts, getCategories, getAdminData } from "@/lib/data";
+import { Sparkles } from "lucide-react";
 
-export default function Home() {
+export const revalidate = 60; // revalidate page every 60 seconds
+
+export default async function Home() {
+  const categories = await getCategories();
+  const products = await getProducts({ featured: { equals: true } });
+  const adminData: any = await getAdminData();
+  const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <MainLayout>
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-cobre/20 via-transparent to-transparent" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h1 className="font-display text-5xl md:text-7xl text-white mb-6 leading-tight">
+                Productos de Cobre{" "}
+                <span className="cobre-text-gradient">Artesanales</span>
+              </h1>
+              <p className="text-xl text-gray-400 mb-10 leading-relaxed">
+                Calidad, elegancia y energía en cada pieza. Descubrí nuestra
+                colección única de cobre artesanal.
+              </p>
+              <div className="flex gap-4 flex-wrap">
+                <Link href="/productos" className="btn-primary">
+                  Ver Productos
+                </Link>
+                <Link href="/contacto" className="btn-secondary">
+                  Contactanos
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="relative">
+                <div className="absolute -inset-2 bg-gradient-to-br from-cobre/40 via-cobre-dark/20 to-cobre-light/40 rounded-3xl blur-sm" />
+                <div className="absolute -inset-1 bg-gradient-to-br from-cobre-light/30 via-cobre/20 to-cobre-dark/30 rounded-[22px]" />
+                <div className="relative bg-dark-card border border-cobre/30 rounded-3xl p-1">
+                  <div className="border border-cobre/50 rounded-[20px] p-1">
+                    <div className="bg-gradient-to-br from-dark-card via-black to-dark-card rounded-[18px] py-16 px-12 flex flex-col items-center justify-center">
+                      <div className="w-52 h-52 flex items-center justify-center mb-6">
+                        <Image
+                          src="/logo.png"
+                          alt="Oro Rojo 29"
+                          width={208}
+                          height={208}
+                          priority
+                          className="drop-shadow-2xl"
+                        />
+                      </div>
+                      <div className="relative w-32">
+                        <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-cobre to-transparent top-1/2" />
+                        <div className="absolute left-0 top-1/2 w-2 h-2 -translate-y-1/2 bg-cobre rounded-full" />
+                        <div className="absolute right-0 top-1/2 w-2 h-2 -translate-y-1/2 bg-cobre rounded-full" />
+                      </div>
+                      <p className="font-display text-3xl text-white text-center mt-8 tracking-[0.2em] uppercase">
+                        Artesanía en Cobre
+                      </p>
+                      <p className="text-cobre-light/60 text-xs mt-3 tracking-[0.3em] uppercase">
+                        Energía & Calidad
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="py-20 bg-dark-card border-y border-dark-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-display text-4xl text-center mb-16">
+            <span className="cobre-text-gradient">Nuestras Categorías</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {categories.map((category: any) => (
+              <Link
+                key={category.id}
+                href={`/categorias/${category.slug}`}
+                className="group"
+              >
+                <div className="dark-card card-hover p-10 text-center transition-all duration-300">
+                  <div className="w-20 h-20 cobre-gradient rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform energia-glow">
+                    <Sparkles size={32} className="text-white" />
+                  </div>
+                  <h3 className="font-display text-2xl text-white mb-3 group-hover:text-cobre-light transition-colors">
+                    {category.name}
+                  </h3>
+                  <p className="text-gray-400">
+                    {category.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-display text-4xl text-center mb-16">
+            <span className="cobre-text-gradient">Productos Destacados</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product: any) => {
+              const imageObj = product.images?.[0];
+              const imageUrl = typeof imageObj === 'object' && imageObj?.url ? imageObj.url : null;
+              const categoryName = typeof product.category === 'object' && product.category?.name ? product.category.name : '';
+
+              return (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  slug={product.slug}
+                  name={product.name}
+                  price={product.price}
+                  image={imageUrl}
+                  category={categoryName}
+                />
+              );
+            })}
+          </div>
+          <div className="text-center mt-16">
+            <Link href="/productos" className="btn-primary">
+              Ver Todos los Productos
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-dark-card border-t border-dark-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="cobre-gradient rounded-3xl p-16 text-center energia-glow">
+            <h2 className="font-display text-4xl mb-6 text-white">
+              ¿Necesitás algo especial?
+            </h2>
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto text-lg">
+              Hacemos piezas personalizadas a medida. Contanos tu idea y la
+              hacemos realidad.
+            </p>
+            <Link
+              href="/contacto"
+              className="inline-block bg-white text-cobre px-10 py-4 rounded-lg font-semibold hover:bg-crema transition-colors"
+            >
+              Contactanos
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <WhatsAppButton phone={whatsappNumber} />
+    </MainLayout>
   );
 }
