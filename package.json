@@ -21,6 +21,7 @@
     "@payloadcms/richtext-lexical": "^3.81.0",
     "@payloadcms/richtext-slate": "^3.81.0",
     "clsx": "^2.1.1",
+    "file-type": "^22.0.0",
     "framer-motion": "^12.38.0",
     "graphql": "^16.13.2",
     "lucide-react": "^1.7.0",
