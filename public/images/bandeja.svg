@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a1f1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="cobre" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a76a"/>
+      <stop offset="50%" stop-color="#b87333"/>
+      <stop offset="100%" stop-color="#8b5a2b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  
+  <circle cx="400" cy="400" r="250" fill="#b87333" opacity="0.1" filter="blur(40px)"/>
+  
+  <!-- Icono de Bandeja -->
+  <g transform="translate(200, 300)">
+    <ellipse cx="200" cy="100" rx="180" ry="70" fill="url(#cobre)" stroke="#f5f0e6" stroke-width="4"/>
+    <ellipse cx="200" cy="95" rx="160" ry="55" fill="url(#bg)" opacity="0.5"/>
+    <path d="M 20 100 Q -20 100 -20 140" stroke="url(#cobre)" stroke-width="15" fill="none" stroke-linecap="round"/>
+    <path d="M 380 100 Q 420 100 420 140" stroke="url(#cobre)" stroke-width="15" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <text x="400" y="650" font-family="Georgia, serif" font-size="32" fill="#d4a76a" text-anchor="middle" letter-spacing="4">BANDEJA ARTESANAL</text>
+</svg>
