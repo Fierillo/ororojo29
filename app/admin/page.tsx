@@ -167,7 +167,7 @@ export default function AdminPage() {
   function handleEditClick(product: Product) {
     setEditingProduct(product);
     if (product.image_id) {
-      setPreviewImage(`/api/images?id=${product.image_id}`);
+      setPreviewImage(`/api/images/${product.image_id}`);
     } else {
       setPreviewImage(null);
     }
@@ -306,7 +306,7 @@ export default function AdminPage() {
                 <div key={p.id} className="bg-gray-800 p-4 rounded flex justify-between items-center">
                   <div className="flex items-center gap-4">
                     {p.image_id && (
-                      <img src={`/api/images?id=${p.image_id}`} alt={p.name} className="w-12 h-12 object-cover rounded" />
+                      <img src={`/api/images/${p.image_id}`} alt={p.name} className="w-12 h-12 object-cover rounded" />
                     )}
                     <div>
                       <span className="font-bold">{p.name}</span>

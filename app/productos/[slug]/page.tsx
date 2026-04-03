@@ -4,7 +4,7 @@ import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getProductBySlug, getProducts, getAdminData } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -35,10 +35,8 @@ export default async function ProductoDetallePage({ params }: Props) {
   );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-  const imageObj = product.images?.[0];
-  const imageUrl = typeof imageObj === 'object' && imageObj?.url ? imageObj.url : null;
-  const categoryName = typeof product.category === 'object' && product.category?.name ? product.category.name : '';
-  const features = Array.isArray(product.features) ? product.features : [];
+  const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
+  const categoryName = product.category_name || '';
 
   return (
     <MainLayout>
@@ -70,50 +68,25 @@ export default async function ProductoDetallePage({ params }: Props) {
               </span>
             </div>
 
-            <div className="flex flex-col justify-center">
-              <h1 className="font-display text-5xl text-white mb-6">
+            <div>
+              <h1 className="font-display text-4xl md:text-5xl text-white mb-6">
                 {product.name}
               </h1>
-              <p className="text-4xl text-cobre-light font-semibold mb-8">
+              <p className="text-cobre text-4xl font-bold mb-8">
                 ${product.price.toLocaleString("es-AR")}
               </p>
-              <p className="text-gray-400 mb-10 leading-relaxed text-lg">
+              <p className="text-gray-300 text-lg mb-10 leading-relaxed">
                 {product.description}
               </p>
 
-              {product.stock && (
-                <p className="text-sm text-green-500 mb-6 flex items-center gap-2">
-                  <Check size={16} />
-                  Stock disponible: {product.stock} unidades
-                </p>
-              )}
-
-              <div className="flex gap-4 flex-wrap">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 min-w-[200px] bg-green-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-green-500 transition-colors text-center"
-                >
-                  Consultar por WhatsApp
-                </a>
-              </div>
-
-              {features.length > 0 && (
-                <div className="mt-12 pt-12 border-t border-dark-border">
-                  <h3 className="font-semibold text-white mb-6 text-lg">
-                    Características
-                  </h3>
-                  <ul className="space-y-3 text-gray-400">
-                    {features.map((featureObj: any, index: number) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <Check size={16} className="text-cobre" />
-                        {featureObj.feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 bg-green-600 text-white px-10 py-4 rounded-lg font-semibold hover:bg-green-500 transition-colors"
+              >
+                Consultar por WhatsApp
+              </a>
             </div>
           </div>
         </div>

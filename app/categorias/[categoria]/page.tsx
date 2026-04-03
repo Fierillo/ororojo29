@@ -41,7 +41,7 @@ export default async function CategoriaPage({ params }: Props) {
           {categoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categoryProducts.map((product: any) => {
-                const imageUrl = product.image_id ? `/api/images?id=${product.image_id}` : null;
+                const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
                 const categoryName = product.category_name || '';
 
                 return (
