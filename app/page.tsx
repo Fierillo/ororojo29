@@ -87,13 +87,15 @@ export default async function Home() {
               >
                 <div className="dark-card card-hover p-10 text-center transition-all duration-300">
                   {category.image_id ? (
-                    <img 
-                      src={`/api/images/${category.image_id}`}
-                      alt={category.name}
-                      className="w-20 h-20 rounded-full mx-auto mb-6 object-cover group-hover:scale-110 transition-transform"
-                    />
+                    <div className="w-40 h-40 mx-auto mb-6 flex items-center justify-center">
+                      <img 
+                        src={`/api/images/${category.image_id}`}
+                        alt={category.name}
+                        className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform drop-shadow-lg"
+                      />
+                    </div>
                   ) : (
-                    <div className="w-20 h-20 cobre-gradient rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform energia-glow">
+                    <div className="w-20 h-20 cobre-gradient rounded-xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform energia-glow">
                       <Sparkles size={32} className="text-white" />
                     </div>
                   )}
