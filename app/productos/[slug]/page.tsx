@@ -53,14 +53,19 @@ export default async function ProductoDetallePage({ params }: Props) {
           <div className="grid md:grid-cols-2 gap-16">
             <div className="relative">
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden energia-glow bg-dark-card">
-                {imageUrl && (
+                {imageUrl ? (
                   <Image
                     src={imageUrl}
                     alt={product.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                    Sin imagen
+                  </div>
                 )}
               </div>
               <span className="absolute top-6 left-6 bg-cobre text-white px-5 py-2 rounded-full font-medium z-10">

@@ -52,6 +52,7 @@ export default async function Home() {
                           width={208}
                           height={208}
                           priority
+                          style={{ width: 'auto', height: 'auto' }}
                           className="drop-shadow-2xl"
                         />
                       </div>

@@ -26,6 +26,7 @@ export default function Navbar() {
                 width={40}
                 height={40}
                 priority
+                style={{ width: 'auto', height: 'auto' }}
                 className="rounded group-hover:scale-105 transition-transform duration-300"
               />
             </div>

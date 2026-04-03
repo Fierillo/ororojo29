@@ -26,13 +26,14 @@ export default function ProductCard({
   return (
     <Link href={`/productos/${slug}`} className="group">
       <article className="dark-card card-hover overflow-hidden transition-all duration-300">
-        <div className="relative w-full aspect-square bg-dark-card">
+        <div className="relative w-full aspect-square bg-dark-card overflow-hidden">
           <Image
             src={imageSrc}
             alt={name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover group-hover:scale-105 transition-transform duration-500"
+            style={{ width: 'auto', height: 'auto' }}
             onError={(e) => {
               (e.target as HTMLImageElement).src = PLACEHOLDER;
             }}
