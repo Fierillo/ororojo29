@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { MessageCircle, Mail, MapPin } from "lucide-react";
 import { getAdminData } from "@/lib/data";
 
@@ -15,12 +14,11 @@ export default async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <Image
+              <img
                 src="/logo.png"
                 alt="Oro Rojo 29"
                 width={50}
                 height={50}
-                priority
                 className="rounded"
               />
               <span className="font-display text-2xl cobre-text-gradient">Oro Rojo 29</span>

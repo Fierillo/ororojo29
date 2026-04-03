@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -20,13 +19,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 flex items-center justify-center">
-              <Image
+              <img
                 src="/logo.png"
                 alt="Oro Rojo 29"
                 width={40}
                 height={40}
-                priority
-                style={{ width: 'auto', height: 'auto' }}
                 className="rounded group-hover:scale-105 transition-transform duration-300"
               />
             </div>

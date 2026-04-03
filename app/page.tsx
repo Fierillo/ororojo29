@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
 import ProductCard from "@/components/products/ProductCard";
@@ -46,13 +45,11 @@ export default async function Home() {
                   <div className="border border-cobre/50 rounded-[20px] p-1">
                     <div className="bg-linear-to-br from-dark-card via-black to-dark-card rounded-[18px] py-16 px-12 flex flex-col items-center justify-center">
                       <div className="w-52 h-52 flex items-center justify-center mb-6">
-                        <Image
+                        <img
                           src="/logo.png"
                           alt="Oro Rojo 29"
                           width={208}
                           height={208}
-                          priority
-                          style={{ width: 'auto', height: 'auto' }}
                           className="drop-shadow-2xl"
                         />
                       </div>
