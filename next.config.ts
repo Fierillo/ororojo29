@@ -8,6 +8,20 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+    localPatterns: [
+      {
+        pathname: '/api/images/**',
+      },
+      {
+        pathname: '/logo.png',
+      },
+      {
+        pathname: '/favicon.ico',
+      },
+      {
+        pathname: '/images/**',
+      },
+    ],
   },
 };
 
