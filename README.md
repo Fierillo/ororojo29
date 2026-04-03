@@ -146,4 +146,4 @@ Las imágenes de productos deben ir en `/public/images/`.
 
 ## Licencia
 
-Privado - Oro Rojo © 2026
+Distribuido bajo la Licencia MIT. Ver `LICENSE` para más información.
