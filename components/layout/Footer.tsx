@@ -75,6 +75,25 @@ export default async function Footer() {
           <p className="text-gray-800 text-xs mt-2">
             Artesanía en cobre con energía
           </p>
+          <div className="mt-6 flex justify-center gap-1 text-[10px] text-gray-800 tracking-[0.1em]">
+            <a 
+              href="https://github.com/Fierillo/ororojo29" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-cobre transition-colors"
+            >
+              Este sitio
+            </a>
+            <span> fue creado por </span>
+            <a 
+              href="https://github.com/Fierillo" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-cobre transition-colors"
+            >
+              Fierillo
+            </a>
+          </div>
         </div>
       </div>
     </footer>
