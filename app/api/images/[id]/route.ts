@@ -28,7 +28,7 @@ export async function GET(
 
     return new NextResponse(img.data, {
       headers: { 
-        'Content-Type': img.mimeType || 'image/jpeg', 
+        'Content-Type': img.mime_type || 'image/jpeg', 
         'Cache-Control': 'public, max-age=31536000' 
       },
     });

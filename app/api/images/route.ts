@@ -31,16 +31,25 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    let mime = file.type;
     const fileType = await fileTypeFromBuffer(buffer);
+    if (fileType) {
+      mime = fileType.mime;
+    }
     
-    if (!fileType || !ALLOWED_MIME_TYPES.includes(fileType.mime)) {
+    // Robust check: if fileType fails but it's an SVG, trust the file.type or extension
+    if (!fileType && (file.type === 'image/svg+xml' || file.name.endsWith('.svg'))) {
+      mime = 'image/svg+xml';
+    }
+    
+    if (!ALLOWED_MIME_TYPES.includes(mime)) {
       return NextResponse.json(
-        { error: 'Invalid file type. Only images allowed.' }, 
+        { error: `Invalid file type: ${mime}. Only images allowed.` }, 
         { status: 400 }
       );
     }
 
-    const id = await images.create(file.name, fileType.mime, buffer);
+    const id = await images.create(file.name, mime, buffer);
     return NextResponse.json({ id });
   } catch (error) {
     console.error('Error uploading image:', error);
