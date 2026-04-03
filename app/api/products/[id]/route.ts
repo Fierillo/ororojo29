@@ -55,6 +55,7 @@ export async function PUT(request: NextRequest) {
       category_id: categoryId,
       destacado: Boolean(body.destacado),
       image_id: imageId,
+      specs: typeof body.specs === 'string' ? body.specs.slice(0, 2000) : null,
     };
 
     const product = await products.update(id, validatedData);

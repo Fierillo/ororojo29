@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
       category_id: categoryId,
       destacado: Boolean(body.destacado),
       image_id: body.image_id ? Number(body.image_id) : null,
+      specs: typeof body.specs === 'string' ? body.specs.slice(0, 2000) : null,
     };
     
     const product = await products.create(validatedData);
