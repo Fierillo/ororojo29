@@ -31,7 +31,15 @@ export async function POST(request: NextRequest) {
 
   try {
     const { name } = await request.json();
-    const cat = await categories.create(name);
+    
+    // Validate name
+    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+      return NextResponse.json({ error: 'Nombre de categoría requerido' }, { status: 400 });
+    }
+    
+    const sanitizedName = name.trim().slice(0, 100);
+    
+    const cat = await categories.create(sanitizedName);
     return NextResponse.json(cat, { status: 201 });
   } catch (error) {
     console.error('Error creating category:', error);
@@ -47,10 +55,15 @@ export async function DELETE(request: NextRequest) {
 
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-    if (!id) return NextResponse.json({ error: 'Category ID required' }, { status: 400 });
+    const idStr = searchParams.get('id');
+    if (!idStr) return NextResponse.json({ error: 'Category ID required' }, { status: 400 });
+    
+    const id = Number(idStr);
+    if (isNaN(id) || id < 1) {
+      return NextResponse.json({ error: 'Category ID inválido' }, { status: 400 });
+    }
 
-    await categories.delete(Number(id));
+    await categories.delete(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting category:', error);

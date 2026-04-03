@@ -9,13 +9,18 @@ export async function GET(
 ) {
   try {
     const resolvedParams = await params;
-    const id = resolvedParams.id;
+    const idStr = resolvedParams.id;
     
-    if (!id) {
+    if (!idStr) {
       return NextResponse.json({ error: 'Image ID required' }, { status: 400 });
     }
 
-    const img = await images.get(Number(id));
+    const id = Number(idStr);
+    if (isNaN(id) || id < 1) {
+      return NextResponse.json({ error: 'Image ID inválido' }, { status: 400 });
+    }
+    
+    const img = await images.get(id);
     
     if (!img) {
       return NextResponse.json({ error: 'Image not found' }, { status: 404 });
