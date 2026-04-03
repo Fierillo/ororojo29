@@ -1,58 +1,75 @@
-# Oro Rojo - Tienda de Productos de Cobre
+# Oro Rojo 29 - E-commerce de Productos de Cobre
 
 Tienda web para venta de utensilios y productos de cobre artesanales.
 
 ## Stack Tecnológico
 
-- **Framework**: Next.js 14 (App Router)
-- **Estilos**: Tailwind CSS + CSS custom
+- **Framework**: Next.js 16 (App Router)
+- **CMS**: Payload CMS 3.0
+- **Base de Datos**: Neon PostgreSQL
+- **Estilos**: Tailwind CSS v4
 - **Iconos**: Lucide React
 - **Animaciones**: Framer Motion
+- **Email**: Resend
 - **Hosting**: Vercel
 
 ## Estructura del Proyecto
 
 ```
 ororojo29/
-├── app/                      # Páginas (App Router)
-│   ├── page.tsx              # Home
-│   ├── productos/            # Catálogo
-│   │   ├── page.tsx          # Listado
-│   │   └── [slug]/page.tsx  # Detalle
-│   ├── categorias/[categoria]/
-│   └── contacto/             # WhatsApp + Formulario
-├── components/               # Componentes reutilizables
-│   ├── ui/                   # Button, Container, WhatsApp
-│   ├── layout/               # Navbar, Footer, MainLayout
-│   ├── products/             # ProductCard
-│   └── forms/                # ContactForm
-├── lib/                      # Utilidades y datos
-│   ├── data.ts               # Productos y categorías (mock)
-│   └── types.ts              # Tipos TypeScript
-└── public/                   # Assets estáticos
-    ├── logo.png
-    └── images/
+├── app/                         # Páginas (App Router)
+│   ├── (payload)/               # Payload CMS routes
+│   │   ├── admin/               # Admin panel
+│   │   └── api/                # API routes
+│   ├── page.tsx                 # Home
+│   ├── productos/              # Catálogo
+│   │   ├── page.tsx            # Listado
+│   │   └── [slug]/page.tsx     # Detalle
+│   ├── categorias/[categoria]/ # Productos por categoría
+│   ├── contacto/               # WhatsApp + Formulario
+│   └── api/contact/            # Contact form API
+├── src/                         # Payload CMS config
+│   ├── payload.config.ts       # Main config
+│   ├── collections/            # Collections
+│   │   ├── Users.ts           # User authentication
+│   │   ├── Media.ts           # Media uploads
+│   │   ├── Products.ts        # Products
+│   │   └── Categories.ts      # Categories
+│   ├── globals/               # Globals
+│   │   └── AdminData.ts       # Site config (WhatsApp, footer, etc)
+│   └── seed.ts                # Seed script
+├── components/                  # Componentes reutilizables
+│   ├── ui/                      # Button, Container, WhatsApp
+│   ├── layout/                  # Navbar, Footer, MainLayout
+│   ├── products/                # ProductCard
+│   └── forms/                   # ContactForm
+├── lib/                         # Utilidades
+│   └── payload.ts              # Payload client
+└── public/                      # Assets estáticos
 ```
 
-## Instalación
+## Quick Start
 
 ```bash
+# Install dependencies
 pnpm install
-```
 
-## Desarrollo
-
-```bash
+# Start development server
 pnpm dev
 ```
 
 Abrí [http://localhost:3000](http://localhost:3000)
 
-## Build
+## Admin Panel
 
-```bash
-pnpm build
-```
+Accedé al panel de admin en: [http://localhost:3000/admin](http://localhost:3000/admin)
+
+### Credenciales
+
+- **Email:** `admin@ororojo29.com`
+- **Password:** Tu `PAYLOAD_SECRET` (del archivo `.env.local`)
+
+El usuario admin se crea automáticamente la primera vez que iniciás el servidor.
 
 ## Variables de Entorno
 
@@ -64,85 +81,89 @@ cp .env.local.example .env.local
 
 Variables necesarias:
 
-- `WHATSAPP_NUMBER`: Número de WhatsApp (sin +, formato: 5491112345678)
-- `POSTGRES_URL` o `DATABASE_URL`: URL de conexión a PostgreSQL (para Payload CMS)
-- `PAYLOAD_SECRET`: Secreto para Payload CMS
-- `RESEND_API_KEY`: API Key de Resend (para emails)
-- `NEXT_PUBLIC_SERVER_URL`: URL del sitio (ej: http://localhost:3000)
+| Variable | Descripción |
+|----------|-------------|
+| `POSTGRES_URL` | URL de conexión a Neon PostgreSQL |
+| `PAYLOAD_SECRET` | Secreto para Payload CMS (usado también como password del admin) |
+| `RESEND_API_KEY` | API Key de Resend (para emails del formulario) |
+| `NEXT_PUBLIC_SERVER_URL` | URL del sitio (ej: http://localhost:3000) |
 
-## Funcionalidades
+## Build
+
+```bash
+pnpm build
+```
+
+## Features
 
 ### Frontend
+
 - [x] Home con productos destacados
 - [x] Catálogo de productos
 - [x] Filtro por categorías
 - [x] Detalle de producto
-- [x] Formulario de contacto
+- [x] Formulario de contacto con validación
 - [x] Botón WhatsApp flotante
 - [x] Responsive design
-- [x] SEO optimizado
+- [x] Dark theme con acentos en cobre
 
-### Backend (próximamente)
-- [ ] Payload CMS (panel admin)
-- [ ] Base de datos PostgreSQL
-- [ ] Integración email (Resend)
+### Backend (Payload CMS)
 
-## Personalización
+- [x] Panel de administración
+- [x] Colección Productos (CRUD)
+- [x] Colección Categorías
+- [x] Colección Media (uploads)
+- [x] Global AdminData (configuración del sitio)
+- [x] Sistema de autenticación simplificado
+- [x] Registro de usuarios deshabilitado (solo 1 admin)
 
-### Colores
+### API
 
-Los colores están definidos en `app/globals.css`:
+- [x] `/api/contact` - Formulario de contacto (envía email via Resend)
 
-```css
---cobre: #b87333;
---cobre-light: #d4a76a;
---cobre-dark: #8b5a2b;
---energia: #ff6b35;
---energia-glow: #ff8c42;
---crema: #f5f0e6;
---oro: #c9a227;
-```
+## Deployment a Vercel
 
-### Productos
-
-Los productos de ejemplo están en `lib/data.ts`. Para agregar productos:
-
-1. Editá `lib/data.ts`
-2. Agregá un nuevo producto con la estructura:
-
-```typescript
-{
-  id: "nuevo-id",
-  name: "Nombre del producto",
-  slug: "slug-del-producto",
-  description: "Descripción...",
-  price: 15000,
-  images: ["/images/producto.jpg"],
-  category: categories[0], // usar categoría existente
-  featured: true, // opcional
-}
-```
-
-### Imágenes
-
-Las imágenes de productos deben ir en `/public/images/`.
-
-## Próximos Pasos
-
-1. **Configurar Payload CMS**:
+1. **Push a GitHub:**
    ```bash
-   npm install @payloadcms/next @payloadcms/db-vercel-postgres
-   ```
-
-2. **Variables de entorno**:
-   - Crear base de datos en Vercel Postgres o Neon
-   - Configurar `POSTGRES_URL` en `.env.local`
-
-3. **Deploy en Vercel**:
-   ```bash
+   git add .
+   git commit -m "feat: initial commit"
    git push origin main
    ```
-   Vercel detecta automáticamente Next.js y hace deploy.
+
+2. **Deploy en Vercel:**
+   - Ir a [vercel.com](https://vercel.com)
+   - Importar el repositorio
+   - Agregar las variables de entorno en Settings:
+     - `POSTGRES_URL`
+     - `PAYLOAD_SECRET`
+     - `RESEND_API_KEY`
+     - `NEXT_PUBLIC_SERVER_URL`
+   - Deploy automático
+
+3. **Primera vez:**
+   - El `onInit` de Payload creará el usuario admin automáticamente
+   - Accedé a `/admin` con email: `admin@ororojo29.com` y password: tu `PAYLOAD_SECRET`
+
+## Colecciones Payload CMS
+
+### Products
+- `name` - Nombre del producto
+- `slug` - URL amigable
+- `description` - Descripción (rich text)
+- `price` - Precio
+- `images` - Imágenes (media)
+- `category` - Relación a Categories
+- `featured` - Producto destacado
+
+### Categories
+- `name` - Nombre
+- `slug` - URL amigable
+- `description` - Descripción
+
+### AdminData (Global)
+- `whatsapp` - Número de WhatsApp
+- `footer` - Texto del footer
+- `contactEmail` - Email de contacto
 
 ## Licencia
 
