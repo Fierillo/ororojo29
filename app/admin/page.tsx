@@ -359,7 +359,7 @@ export default function AdminPage() {
                       <img 
                         src={getCropImageSrc(previewImage)} 
                         alt="Preview" 
-                        className="h-32 object-cover rounded"
+                        className="h-32 object-contain"
                         onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
                       />
                     </div>
@@ -385,7 +385,7 @@ export default function AdminPage() {
                     <img 
                       src={getCropImageSrc(p.image_id ? `/api/images/${p.image_id}` : null)} 
                       alt={p.name} 
-                      className="w-12 h-12 object-cover rounded"
+                      className="w-12 h-12 object-contain"
                       onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
                     />
                     <div>
@@ -421,9 +421,9 @@ export default function AdminPage() {
                     <div className="flex items-center gap-3">
                       {c.image_id && (
                         <img 
-                          src={getCropImageSrc(`/api/images/${c.image_id}`)}
+                          src={c.image_id && !categoryPreviewImage ? getCropImageSrc(`/api/images/${c.image_id}`) : (categoryPreviewImage || '')}
                           alt={c.name}
-                          className="w-10 h-10 object-cover rounded"
+                          className="w-10 h-10 object-contain"
                           onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
                         />
                       )}
@@ -473,7 +473,7 @@ export default function AdminPage() {
                         <img 
                           src={categoryPreviewImage || getCropImageSrc(`/api/images/${editingCategory.image_id}`)}
                           alt="Preview"
-                          className="h-24 object-cover rounded"
+                          className="h-24 object-contain"
                           onError={(e) => { e.currentTarget.src = PLACEHOLDER; }}
                         />
                       </div>
