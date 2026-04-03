@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Oro Rojo - Tienda de Productos de Cobre
 
-## Getting Started
+Tienda web para venta de utensilios y productos de cobre artesanales.
 
-First, run the development server:
+## Stack Tecnológico
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework**: Next.js 14 (App Router)
+- **Estilos**: Tailwind CSS + CSS custom
+- **Iconos**: Lucide React
+- **Animaciones**: Framer Motion
+- **Hosting**: Vercel
+
+## Estructura del Proyecto
+
+```
+ororojo29/
+├── app/                      # Páginas (App Router)
+│   ├── page.tsx              # Home
+│   ├── productos/            # Catálogo
+│   │   ├── page.tsx          # Listado
+│   │   └── [slug]/page.tsx  # Detalle
+│   ├── categorias/[categoria]/
+│   └── contacto/             # WhatsApp + Formulario
+├── components/               # Componentes reutilizables
+│   ├── ui/                   # Button, Container, WhatsApp
+│   ├── layout/               # Navbar, Footer, MainLayout
+│   ├── products/             # ProductCard
+│   └── forms/                # ContactForm
+├── lib/                      # Utilidades y datos
+│   ├── data.ts               # Productos y categorías (mock)
+│   └── types.ts              # Tipos TypeScript
+└── public/                   # Assets estáticos
+    ├── logo.png
+    └── images/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalación
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Desarrollo
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Abrí [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm build
+```
 
-## Deploy on Vercel
+## Variables de Entorno
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Creá un archivo `.env.local` basándote en `.env.local.example`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+cp .env.local.example .env.local
+```
+
+Variables necesarias:
+
+- `WHATSAPP_NUMBER`: Número de WhatsApp (sin +, formato: 5491112345678)
+- `POSTGRES_URL` o `DATABASE_URL`: URL de conexión a PostgreSQL (para Payload CMS)
+- `PAYLOAD_SECRET`: Secreto para Payload CMS
+- `RESEND_API_KEY`: API Key de Resend (para emails)
+- `NEXT_PUBLIC_SERVER_URL`: URL del sitio (ej: http://localhost:3000)
+
+## Funcionalidades
+
+### Frontend
+- [x] Home con productos destacados
+- [x] Catálogo de productos
+- [x] Filtro por categorías
+- [x] Detalle de producto
+- [x] Formulario de contacto
+- [x] Botón WhatsApp flotante
+- [x] Responsive design
+- [x] SEO optimizado
+
+### Backend (próximamente)
+- [ ] Payload CMS (panel admin)
+- [ ] Base de datos PostgreSQL
+- [ ] Integración email (Resend)
+
+## Personalización
+
+### Colores
+
+Los colores están definidos en `app/globals.css`:
+
+```css
+--cobre: #b87333;
+--cobre-light: #d4a76a;
+--cobre-dark: #8b5a2b;
+--energia: #ff6b35;
+--energia-glow: #ff8c42;
+--crema: #f5f0e6;
+--oro: #c9a227;
+```
+
+### Productos
+
+Los productos de ejemplo están en `lib/data.ts`. Para agregar productos:
+
+1. Editá `lib/data.ts`
+2. Agregá un nuevo producto con la estructura:
+
+```typescript
+{
+  id: "nuevo-id",
+  name: "Nombre del producto",
+  slug: "slug-del-producto",
+  description: "Descripción...",
+  price: 15000,
+  images: ["/images/producto.jpg"],
+  category: categories[0], // usar categoría existente
+  featured: true, // opcional
+}
+```
+
+### Imágenes
+
+Las imágenes de productos deben ir en `/public/images/`.
+
+## Próximos Pasos
+
+1. **Configurar Payload CMS**:
+   ```bash
+   npm install @payloadcms/next @payloadcms/db-vercel-postgres
+   ```
+
+2. **Variables de entorno**:
+   - Crear base de datos en Vercel Postgres o Neon
+   - Configurar `POSTGRES_URL` en `.env.local`
+
+3. **Deploy en Vercel**:
+   ```bash
+   git push origin main
+   ```
+   Vercel detecta automáticamente Next.js y hace deploy.
+
+## Licencia
+
+Privado - Oro Rojo © 2026
