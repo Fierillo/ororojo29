@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     if (!data.name || !data.email || !data.message) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Campos requeridos faltantes" },
         { status: 400 }
       );
     }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error processing contact form:", error);
     return NextResponse.json(
-      { error: "Error processing the message" },
+      { error: "Error interno del servidor" },
       { status: 500 }
     );
   }

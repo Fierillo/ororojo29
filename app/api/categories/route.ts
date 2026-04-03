@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { categories } from '@/lib/crud';
 
 export async function GET(request: NextRequest) {
+  const { verifyAdminAuth } = await import('@/lib/auth');
+  if (!verifyAdminAuth(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
 
@@ -14,7 +19,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(all);
   } catch (error) {
     console.error('Error fetching categories:', error);
-    return NextResponse.json({ error: 'Failed to fetch categories' }, { status: 500 });
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
 
@@ -30,7 +35,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(cat, { status: 201 });
   } catch (error) {
     console.error('Error creating category:', error);
-    return NextResponse.json({ error: 'Failed to create category' }, { status: 500 });
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
 
@@ -49,6 +54,6 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting category:', error);
-    return NextResponse.json({ error: 'Failed to delete category' }, { status: 500 });
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
