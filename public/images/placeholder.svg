@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a1f1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="cobre" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a76a"/>
+      <stop offset="50%" stop-color="#b87333"/>
+      <stop offset="100%" stop-color="#8b5a2b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  
+  <circle cx="400" cy="400" r="250" fill="#b87333" opacity="0.1" filter="blur(40px)"/>
+  
+  <!-- Icono de Pirámide -->
+  <g transform="translate(250, 200)">
+    <path d="M 150 50 L 280 280 L 20 280 Z" fill="url(#cobre)" stroke="#f5f0e6" stroke-width="4"/>
+    <path d="M 150 50 L 280 280 L 150 280 Z" fill="#000000" opacity="0.3"/>
+    <circle cx="150" cy="200" r="30" fill="url(#bg)" stroke="#d4a76a" stroke-width="3"/>
+  </g>
+  
+  <text x="400" y="650" font-family="Georgia, serif" font-size="32" fill="#d4a76a" text-anchor="middle" letter-spacing="4">PIRÁMIDE ENERGÉTICA</text>
+</svg>
