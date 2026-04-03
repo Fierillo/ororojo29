@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #fafafa;
+  
+  --cobre: #b87333;
+  --cobre-light: #d4a76a;
+  --cobre-dark: #8b5a2b;
+  --cobre-glow: rgba(184, 115, 51, 0.3);
+  
+  --energia: #ff6b35;
+  --energia-glow: #ff8c42;
+  
+  --dark-bg: #000000;
+  --dark-card: #0f0f0f;
+  --dark-border: #1a1a1a;
+
+  --crema: #f5f0e6;
+  --oro: #c9a227;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  
+  --color-cobre: var(--cobre);
+  --color-cobre-light: var(--cobre-light);
+  --color-cobre-dark: var(--cobre-dark);
+  
+  --color-energia: var(--energia);
+  --color-energia-glow: var(--energia-glow);
+  
+  --color-crema: var(--crema);
+  --color-oro: var(--oro);
+  
+  --color-dark-bg: var(--dark-bg);
+  --color-dark-card: var(--dark-card);
+  --color-dark-border: var(--dark-border);
+  
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.cobre-gradient {
+  background: linear-gradient(135deg, var(--cobre-light) 0%, var(--cobre) 50%, var(--cobre-dark) 100%);
+}
+
+.cobre-text-gradient {
+  background: linear-gradient(135deg, var(--cobre-light) 0%, var(--cobre) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.energia-glow {
+  box-shadow: 0 0 30px var(--cobre-glow);
+}
+
+.dark-card {
+  @apply bg-dark-card border border-dark-border rounded-lg;
+}
+
+.card-hover:hover {
+  @apply border-cobre/50;
+  box-shadow: 0 0 40px var(--cobre-glow);
+}
+
+.btn-primary {
+  @apply bg-cobre text-white px-6 py-3 rounded-lg font-medium hover:bg-cobre-light transition-all duration-300;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 30px var(--cobre-glow);
+}
+
+.btn-secondary {
+  @apply border-2 border-cobre text-cobre-light px-6 py-3 rounded-lg font-medium hover:bg-cobre hover:text-white transition-all duration-300;
+}
+
+.whatsapp-float {
+  @apply fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all z-50 hover:scale-110;
+}
+
+.whatsapp-float:hover {
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.4);
+}
+
+::selection {
+  background: var(--cobre);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cobre-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cobre);
 }
