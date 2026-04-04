@@ -3,30 +3,31 @@ import ProductCard from "@/components/products/ProductCard";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getCategories, getCategoryBySlug, getProducts, getAdminData } from "@/lib/data";
 import { notFound } from "next/navigation";
+import { Category, Product, AdminData } from "@/lib/types";
 
-interface Props {
+interface PageProps {
   params: Promise<{ categoria: string }>;
 }
 
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const categories = await getCategories();
-  return categories.map((category: any) => ({
+  const categories: Category[] = await getCategories();
+  return categories.map((category: Category) => ({
     categoria: category.slug,
   }));
 }
 
-export default async function CategoriaPage({ params }: Props) {
+export default async function CategoriaPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const category: any = await getCategoryBySlug(resolvedParams.categoria);
+  const category: Category | null = await getCategoryBySlug(resolvedParams.categoria);
 
   if (!category) {
     notFound();
   }
 
-  const categoryProducts = await getProducts({ category: category.id });
-  const adminData: any = await getAdminData();
+  const categoryProducts: Product[] = await getProducts({ category: category.id });
+  const adminData: AdminData = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
 
   return (
@@ -47,7 +48,7 @@ export default async function CategoriaPage({ params }: Props) {
 
           {categoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categoryProducts.map((product: any) => {
+              {categoryProducts.map((product: Product) => {
                 const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
                 const categoryName = product.category_name || '';
 

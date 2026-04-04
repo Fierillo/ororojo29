@@ -4,13 +4,14 @@ import FeaturedProducts from "@/components/ui/FeaturedProducts";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getProducts, getCategories, getAdminData } from "@/lib/data";
 import { Sparkles } from "lucide-react";
+import { Category, Product, AdminData } from "@/lib/types";
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const categories = await getCategories();
-  const products = await getProducts({ featured: true });
-  const adminData: any = await getAdminData();
+  const categories: Category[] = await getCategories();
+  const products: Product[] = await getProducts({ featured: true });
+  const adminData: AdminData = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
 
   return (
@@ -79,7 +80,7 @@ export default async function Home() {
             <span className="cobre-text-gradient">Nuestras Categorías</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {categories.map((category: any) => (
+            {categories.map((category: Category) => (
               <Link
                 key={category.id}
                 href={`/categorias/${category.slug}`}

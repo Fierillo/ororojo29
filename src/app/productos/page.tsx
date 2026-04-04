@@ -2,13 +2,14 @@ import MainLayout from "@/components/layout/MainLayout";
 import ProductGrid from "@/components/ui/ProductGrid";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getProducts, getCategories, getAdminData } from "@/lib/data";
+import { Category, Product, AdminData } from "@/lib/types";
 
 export const revalidate = 60;
 
 export default async function ProductosPage() {
-  const categories = await getCategories();
-  const products = await getProducts();
-  const adminData: any = await getAdminData();
+  const categories: Category[] = await getCategories();
+  const products: Product[] = await getProducts();
+  const adminData: AdminData = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
 
   return (

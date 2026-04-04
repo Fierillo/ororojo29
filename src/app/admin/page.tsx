@@ -2,36 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PLACEHOLDER, getCropImageSrc } from '@/lib/cropImage';
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  intro_text?: string;
-  image_id?: number | null;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  slug: string;
-  price: number;
-  description: string;
-  specs?: string;
-  category_id: number;
-  category_name?: string;
-  featured: boolean;
-  image_id: number | null;
-}
-
-interface SiteConfig {
-  whatsappNumber?: string;
-  contactEmail?: string;
-  location?: string;
-  schedule?: string;
-}
-
-type View = 'products' | 'categories' | 'config';
+import { Category, Product, AdminData as SiteConfig, AdminView as View } from '@/lib/types';
 
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);

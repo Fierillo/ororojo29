@@ -6,29 +6,30 @@ import { getCropImageProps } from "@/lib/cropImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { Product, AdminData } from "@/lib/types";
 
-interface Props {
+interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const products = await getProducts();
-  return products.map((product: any) => ({
+  const products: Product[] = await getProducts();
+  return products.map((product: Product) => ({
     slug: product.slug,
   }));
 }
 
-export default async function ProductoDetallePage({ params }: Props) {
+export default async function ProductoDetallePage({ params }: PageProps) {
   const resolvedParams = await params;
-  const product: any = await getProductBySlug(resolvedParams.slug);
+  const product: Product | null = await getProductBySlug(resolvedParams.slug);
 
   if (!product) {
     notFound();
   }
 
-  const adminData: any = await getAdminData();
+  const adminData: AdminData = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
 
   const whatsappMessage = encodeURIComponent(

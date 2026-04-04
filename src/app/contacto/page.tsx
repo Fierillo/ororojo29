@@ -3,11 +3,12 @@ import ContactForm from "@/components/forms/ContactForm";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { getAdminData } from "@/lib/data";
+import { AdminData } from "@/lib/types";
 
 export const revalidate = 60;
 
 export default async function ContactoPage() {
-  const adminData: any = await getAdminData();
+  const adminData: AdminData = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
   const contactEmail = adminData?.contactEmail || "contacto@ororojo29.com";
   const location = adminData?.location || "Buenos Aires, Argentina";
