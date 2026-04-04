@@ -1,6 +1,7 @@
 import { products, categories, siteConfig } from './crud';
+import { Product, Category, AdminData } from './types';
 
-export async function getProducts(query: Record<string, any> = {}) {
+export async function getProducts(query: { featured?: boolean; category?: number } = {}): Promise<Product[]> {
   try {
     if (query.featured) {
       return await products.getFeatured();
@@ -15,7 +16,7 @@ export async function getProducts(query: Record<string, any> = {}) {
   }
 }
 
-export async function getProductBySlug(slug: string) {
+export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     return await products.getBySlug(slug);
   } catch (error) {
@@ -24,7 +25,7 @@ export async function getProductBySlug(slug: string) {
   }
 }
 
-export async function getCategories() {
+export async function getCategories(): Promise<Category[]> {
   try {
     return await categories.getAll();
   } catch (error) {
@@ -33,7 +34,7 @@ export async function getCategories() {
   }
 }
 
-export async function getCategoryBySlug(slug: string) {
+export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {
     return await categories.getBySlug(slug);
   } catch (error) {
@@ -42,11 +43,11 @@ export async function getCategoryBySlug(slug: string) {
   }
 }
 
-export async function getAdminData() {
+export async function getAdminData(): Promise<AdminData> {
   try {
     return await siteConfig.get();
   } catch (error) {
     console.error('Error fetching admin data:', error);
-    return null;
+    return {};
   }
 }
