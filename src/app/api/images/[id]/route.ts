@@ -26,7 +26,7 @@ export async function GET(
       return NextResponse.json({ error: 'Image not found' }, { status: 404 });
     }
 
-    return new NextResponse(img.data, {
+    return new NextResponse(img.data as unknown as BodyInit, {
       headers: { 
         'Content-Type': img.mime_type || 'image/jpeg', 
         'Cache-Control': 'public, max-age=31536000' 

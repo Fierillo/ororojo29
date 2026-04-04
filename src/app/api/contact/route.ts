@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getAdminData } from "@/lib/data";
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
+import { AdminData, ContactFormData } from "@/lib/types";
 
 function sanitizeHTML(str: string): string {
   return str
@@ -22,22 +16,42 @@ const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
 const MAX_ATTEMPTS = 10;
 
 async function checkRateLimit(ip: string): Promise<boolean> {
-  const { Pool } = await import('pg');
-  const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
-    ssl: { rejectUnauthorized: false },
-  });
-  
-  const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW);
-  const result = await pool.query(
-    `SELECT COUNT(*) as attempts FROM auth_attempts 
-     WHERE ip_address = $1 AND created_at > $2`,
-    [ip, windowStart]
-  );
-  
-  const attempts = parseInt(result.rows[0].attempts);
-  await pool.end();
-  return attempts < MAX_ATTEMPTS;
+  try {
+    const { Pool } = await import('pg');
+    const pool = new Pool({
+      connectionString: process.env.POSTGRES_URL,
+      ssl: { rejectUnauthorized: false },
+    });
+    
+    // Ensure table exists
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS contact_attempts (
+        ip_address TEXT,
+        created_at TIMESTAMP DEFAULT NOW()
+      )
+    `);
+
+    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW);
+    const result = await pool.query(
+      `SELECT COUNT(*) as attempts FROM contact_attempts 
+       WHERE ip_address = $1 AND created_at > $2`,
+      [ip, windowStart]
+    );
+    
+    const attempts = parseInt(result.rows[0].attempts);
+    
+    if (attempts < MAX_ATTEMPTS) {
+      await pool.query('INSERT INTO contact_attempts (ip_address) VALUES ($1)', [ip]);
+      await pool.end();
+      return true;
+    }
+    
+    await pool.end();
+    return false;
+  } catch (error) {
+    console.error('Rate limit error:', error);
+    return true; // Fail open to not block users if DB is down
+  }
 }
 
 function getClientIP(request: NextRequest): string {
@@ -73,7 +87,7 @@ export async function POST(request: NextRequest) {
     const sanitizedPhone = sanitizeHTML((data.phone || '').trim().slice(0, 20));
     const sanitizedMessage = sanitizeHTML(data.message.trim().slice(0, 2000));
 
-    const adminData: any = await getAdminData();
+    const adminData: AdminData = await getAdminData();
     const contactEmail = adminData?.contactEmail || "contacto@ororojo29.com";
 
     // Only send if API key exists
