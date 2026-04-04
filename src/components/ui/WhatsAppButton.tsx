@@ -1,11 +1,7 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
-
-interface WhatsAppButtonProps {
-  message?: string;
-  phone?: string;
-}
+import { WhatsAppButtonProps } from "@/lib/types";
 
 export default function WhatsAppButton({
   message = "Hola! Quiero consultar sobre los productos",

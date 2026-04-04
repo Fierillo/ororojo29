@@ -3,15 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getCropImageProps } from "@/lib/cropImage";
-
-interface ProductCardProps {
-  id: string;
-  slug: string;
-  name: string;
-  price: number;
-  image: string | null | undefined;
-  category: string;
-}
+import { ProductCardProps } from "@/lib/types";
 
 export default function ProductCard({
   slug,

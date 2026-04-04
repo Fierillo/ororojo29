@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import Button from "@/components/ui/Button";
-
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
+import { ContactFormData as FormData } from "@/lib/types";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({

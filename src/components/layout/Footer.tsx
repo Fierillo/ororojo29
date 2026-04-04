@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { MessageCircle, Mail, MapPin } from "lucide-react";
 import { getAdminData } from "@/lib/data";
+import { AdminData } from "@/lib/types";
 
 export default async function Footer() {
-  const adminData: any = await getAdminData();
+  const adminData: AdminData = await getAdminData();
   const whatsappNumber = adminData?.whatsappNumber || "5491112345678";
   const contactEmail = adminData?.contactEmail || "contacto@ororojo29.com";
   const location = adminData?.location || "Buenos Aires, Argentina";

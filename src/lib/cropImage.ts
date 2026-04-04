@@ -1,19 +1,10 @@
+import React from "react";
+import { ImageOptions, CropImageResult } from "./types";
+
 export const PLACEHOLDER = "/images/placeholder.svg";
 
 export function getCropImageSrc(src: string | null | undefined): string {
   return src || PLACEHOLDER;
-}
-
-interface ImageProps {
-  src: string | null | undefined;
-  alt: string;
-  fill?: boolean;
-  width?: number;
-  height?: number;
-  className?: string;
-  sizes?: string;
-  priority?: boolean;
-  withFallback?: boolean;
 }
 
 export function getCropImageProps({
@@ -26,10 +17,10 @@ export function getCropImageProps({
   sizes,
   priority = false,
   withFallback = true,
-}: ImageProps) {
+}: ImageOptions): CropImageResult {
   const imageSrc = src || PLACEHOLDER;
   
-  const props: any = {
+  const props: CropImageResult = {
     src: imageSrc,
     alt,
     fill,

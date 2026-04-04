@@ -1,10 +1,6 @@
-import { ReactNode } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-
-interface MainLayoutProps {
-  children: ReactNode;
-}
+import { MainLayoutProps } from "@/lib/types";
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (

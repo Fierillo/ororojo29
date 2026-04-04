@@ -2,27 +2,7 @@
 
 import { useState } from "react";
 import ProductCard from "@/components/products/ProductCard";
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  slug: string;
-  price: number;
-  image_id: number | null;
-  category_id: number;
-  category_name?: string;
-}
-
-interface ProductGridProps {
-  categories: Category[];
-  products: Product[];
-}
+import { Category, Product, ProductGridProps } from "@/lib/types";
 
 export default function ProductGrid({ categories, products }: ProductGridProps) {
   const [activeCategories, setActiveCategories] = useState<number[]>([]);
@@ -41,7 +21,7 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
 
   const filteredProducts = activeCategories.length === 0
     ? products
-    : products.filter((product: any) =>
+    : products.filter((product: Product) =>
         activeCategories.some((catId: number) => product.category_id === catId)
       );
 
@@ -59,7 +39,7 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
           Todos
         </button>
 
-        {categories.map((category: any) => (
+        {categories.map((category: Category) => (
           <button
             key={category.id}
             onClick={() => toggleCategory(category.id)}
@@ -80,8 +60,8 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
             Sintonizando:{" "}
             <span className="text-cobre-light">
               {categories
-                .filter((c: any) => activeCategories.includes(c.id))
-                .map((c: any) => c.name)
+                .filter((c: Category) => activeCategories.includes(c.id))
+                .map((c: Category) => c.name)
                 .join(" + ")}
             </span>
           </span>
@@ -95,7 +75,7 @@ export default function ProductGrid({ categories, products }: ProductGridProps) 
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredProducts.map((product: any) => {
+        {filteredProducts.map((product: Product) => {
           const imageUrl = product.image_id ? `/api/images/${product.image_id}` : null;
           const categoryName = product.category_name || '';
 

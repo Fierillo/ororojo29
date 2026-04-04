@@ -1,14 +1,5 @@
-import { ReactNode } from "react";
 import clsx from "clsx";
-
-interface ButtonProps {
-  children: ReactNode;
-  variant?: "primary" | "secondary" | "outline";
-  className?: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: "button" | "submit" | "reset";
-}
+import { ButtonProps } from "@/lib/types";
 
 export default function Button({
   children,

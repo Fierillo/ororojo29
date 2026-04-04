@@ -1,21 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Category, Product, CategoryFilterProps } from "@/lib/types";
 
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  description?: string;
-}
-
-interface CategoryFilterProps {
-  categories: Category[];
-  baseUrl?: string;
-}
-
-export default function CategoryFilter({ categories, baseUrl }: CategoryFilterProps) {
+export default function CategoryFilter({ categories }: CategoryFilterProps) {
   const [activeCategories, setActiveCategories] = useState<number[]>([]);
 
   const toggleCategory = (categoryId: number) => {
@@ -44,7 +32,7 @@ export default function CategoryFilter({ categories, baseUrl }: CategoryFilterPr
           Todos
         </button>
 
-        {categories.map((category: any) => (
+        {categories.map((category: Category) => (
           <button
             key={category.id}
             onClick={() => toggleCategory(category.id)}
@@ -64,8 +52,8 @@ export default function CategoryFilter({ categories, baseUrl }: CategoryFilterPr
           <span className="text-gray-400 text-sm">
             Filtrando por:{" "}
             {categories
-              .filter((c: any) => activeCategories.includes(c.id))
-              .map((c: any) => c.name)
+              .filter((c: Category) => activeCategories.includes(c.id))
+              .map((c: Category) => c.name)
               .join(" + ")}
           </span>
         </div>
@@ -75,15 +63,15 @@ export default function CategoryFilter({ categories, baseUrl }: CategoryFilterPr
 }
 
 export function filterProductsByCategories(
-  products: any[],
+  products: Product[],
   activeCategoryIds: number[]
 ) {
   if (activeCategoryIds.length === 0) {
     return products;
   }
 
-  // AND filter: product must match ALL selected categories
+  // OR filter: product must match SOME selected categories
   return products.filter((product) =>
-    activeCategoryIds.every((catId) => product.category_id === catId)
+    activeCategoryIds.some((catId) => product.category_id === catId)
   );
 }
