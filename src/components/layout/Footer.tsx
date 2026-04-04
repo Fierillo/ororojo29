@@ -75,7 +75,7 @@ export default async function Footer() {
           <p className="text-gray-800 text-xs mt-2">
             Artesanía en cobre con energía
           </p>
-          <div className="mt-6 flex justify-center gap-1 text-[10px] text-gray-800 tracking-[0.1em]">
+          <div className="mt-6 flex justify-center gap-1 text-[10px] text-gray-800 tracking-widest">
             <a 
               href="https://github.com/Fierillo/ororojo29" 
               target="_blank" 
