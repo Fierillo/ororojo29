@@ -1,5 +1,33 @@
 import pool from './db';
-import { Product, Category, Image, AdminData } from './types';
+import { Product, Category, Image, AdminData, Contact } from './types';
+
+export const contacts = {
+  create: async (data: { name: string; email: string; phone: string; message: string }) => {
+    const result = await pool.query<Contact>(
+      `INSERT INTO contacts (name, email, phone, message, status, created_at) 
+       VALUES ($1, $2, $3, $4, 'pending', NOW()) RETURNING *`,
+      [data.name, data.email, data.phone, data.message]
+    );
+    return result.rows[0];
+  },
+
+  getAll: async () => {
+    const result = await pool.query<Contact>('SELECT * FROM contacts ORDER BY created_at DESC');
+    return result.rows;
+  },
+
+  updateStatus: async (id: number, status: Contact['status']) => {
+    const result = await pool.query<Contact>(
+      'UPDATE contacts SET status = $1 WHERE id = $2 RETURNING *',
+      [status, id]
+    );
+    return result.rows[0];
+  },
+
+  delete: async (id: number) => {
+    await pool.query('DELETE FROM contacts WHERE id = $1', [id]);
+  },
+};
 
 export const products = {
   getAll: async () => {
