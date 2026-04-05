@@ -56,6 +56,12 @@ export interface ContactFormData {
   message: string;
 }
 
+export interface Contact extends ContactFormData {
+  id: number;
+  status: 'pending' | 'read' | 'replied';
+  created_at: string | Date;
+}
+
 /**
  * UI & Helper Types
  */
