@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getAdminData } from "@/lib/data";
 import { AdminData, ContactFormData } from "@/lib/types";
+import { contacts } from "@/lib/crud";
 
 function sanitizeHTML(str: string): string {
   return str
@@ -14,6 +15,27 @@ function sanitizeHTML(str: string): string {
 
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
 const MAX_ATTEMPTS = 10;
+
+async function ensureContactTable() {
+  const { Pool } = await import('pg');
+  const pool = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+    ssl: { rejectUnauthorized: false },
+  });
+  
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS contacts (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      phone TEXT,
+      message TEXT NOT NULL,
+      status TEXT DEFAULT 'pending',
+      created_at TIMESTAMP DEFAULT NOW()
+    )
+  `);
+  await pool.end();
+}
 
 async function checkRateLimit(ip: string): Promise<boolean> {
   try {
@@ -81,11 +103,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Ensure table exists (one-time or lazy)
+    await ensureContactTable();
+
     // Sanitize input to prevent XSS
     const sanitizedName = sanitizeHTML(data.name.trim().slice(0, 100));
     const sanitizedEmail = sanitizeHTML(data.email.trim().slice(0, 100));
     const sanitizedPhone = sanitizeHTML((data.phone || '').trim().slice(0, 20));
     const sanitizedMessage = sanitizeHTML(data.message.trim().slice(0, 2000));
+
+    // Persist in DB
+    await contacts.create({
+      name: sanitizedName,
+      email: sanitizedEmail,
+      phone: sanitizedPhone,
+      message: sanitizedMessage
+    });
 
     const adminData: AdminData = await getAdminData();
     const contactEmail = adminData?.contactEmail || "contacto@ororojo29.com";
@@ -96,13 +129,13 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: "Oro Rojo 29 <onboarding@resend.dev>",
         to: contactEmail,
-        subject: `New contact message from ${sanitizedName}`,
+        subject: `Nuevo mensaje de contacto de ${sanitizedName}`,
         html: `
-          <h2>New Contact Message</h2>
-          <p><strong>Name:</strong> ${sanitizedName}</p>
+          <h2>Nuevo Mensaje de Contacto</h2>
+          <p><strong>Nombre:</strong> ${sanitizedName}</p>
           <p><strong>Email:</strong> ${sanitizedEmail}</p>
-          <p><strong>Phone:</strong> ${sanitizedPhone || 'Not provided'}</p>
-          <p><strong>Message:</strong></p>
+          <p><strong>Teléfono:</strong> ${sanitizedPhone || 'No proporcionado'}</p>
+          <p><strong>Mensaje:</strong></p>
           <p>${sanitizedMessage}</p>
         `,
       });
