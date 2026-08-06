@@ -1,0 +1,29 @@
+packages:
+  - '.'
+
+minimumReleaseAge: 4320
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - 'eslint-import-resolver-typescript@3.10.1'
+  - 'semver@6.3.1'
+  - 'undici-types@6.21.0'
+trustLockfile: false
+blockExoticSubdeps: true
+strictDepBuilds: true
+allowBuilds:
+  'sharp': true
+  'bufferutil': true
+  'utf-8-validate': true
+  'esbuild': true
+  'unrs-resolver': true
+  '@prisma/engines': true
+  'prisma': true
+  '@tailwindcss/oxide@4.2.2': true
+  'resend@6.10.0': true
+  'semver@6.3.1': true
+  'semver@7.7.4': true
+  'undici-types@6.21.0': true
+  'undici@7.24.7': true
